@@ -29,8 +29,7 @@ function App(props: FilmDataProps) {
               filmList={props.filmList}
             />
           }
-          >
-          </Route>
+          />
           <Route path="/login" element={<SignIn/>}></Route>
           <Route path="/mylist" element={
             <AuthChecker isAuth={props.isAuth}>
