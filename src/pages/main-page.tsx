@@ -1,12 +1,14 @@
-import FilmCard from './film-card';
+import FilmCard from '../components/film-card';
+import { Link } from 'react-router-dom';
 
 type FilmDataProps = {
   filmName: string;
   filmGenre: string;
   filmYear: number;
+  filmList: readonly { [key: string]: string}[];
 };
 
-function MainPage({ filmName, filmGenre, filmYear }: FilmDataProps) {
+function MainPage({ filmName, filmGenre, filmYear, filmList }: FilmDataProps) {
   return (
     <>
       <section className="film-card">
@@ -73,16 +75,17 @@ function MainPage({ filmName, filmGenre, filmYear }: FilmDataProps) {
                   </svg>
                   <span>Play</span>
                 </button>
-                <button
+                <Link
                   className="btn btn--list film-card__button"
                   type="button"
+                  to="/mylist"
                 >
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">9</span>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -147,26 +150,7 @@ function MainPage({ filmName, filmGenre, filmYear }: FilmDataProps) {
           </ul>
 
           <div className="catalog__films-list">
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
-            <FilmCard />
+            {filmList.map((film) => <FilmCard key={film.id} filmName={film.FilmName} filmPreview={film.FilmPreview} />)}
           </div>
 
           <div className="catalog__more">

@@ -1,12 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app';
-
-const SelectedFilmSettings = {
-  FilmName: 'The Grand Budapest Hotel',
-  FilmGenre: 'Drama',
-  FilmYear: 2014,
-} as const;
+import { SelectedFilmSettings, FilmList, IsAuth } from './data';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,6 +13,8 @@ root.render(
       filmName={SelectedFilmSettings.FilmName}
       filmGenre={SelectedFilmSettings.FilmGenre}
       filmYear={SelectedFilmSettings.FilmYear}
+      filmList={FilmList}
+      isAuth={IsAuth}
     />
   </React.StrictMode>
 );
