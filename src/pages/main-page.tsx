@@ -1,21 +1,23 @@
-import FilmCard from '../components/film-card';
 import { Link } from 'react-router-dom';
+import { FilmData } from '../mocks/films';
+import ListOfFilmCards from '../components/list-of-film-cards';
 
 type FilmDataProps = {
-  filmName: string;
-  filmGenre: string;
-  filmYear: number;
+  filmsData: {[key: string]: FilmData};
   filmList: readonly { [key: string]: string}[];
+  myListFilmsNumber: number;
+  activeFilm: string;
+  handleActiveFilm: (filmId: string) => void;
 };
 
-function MainPage({ filmName, filmGenre, filmYear, filmList }: FilmDataProps) {
+function MainPage({filmList, filmsData, myListFilmsNumber, activeFilm, handleActiveFilm }: FilmDataProps) {
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src="img/bg-the-grand-budapest-hotel.jpg"
-            alt="The Grand Budapest Hotel"
+            src={filmsData[activeFilm].filmMedia.filmBackgroundImage}
+            alt={filmsData[activeFilm].filmName}
           />
         </div>
 
@@ -51,30 +53,31 @@ function MainPage({ filmName, filmGenre, filmYear, filmList }: FilmDataProps) {
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={filmsData[activeFilm].filmMedia.filmPoster}
+                alt={`${filmsData[activeFilm].filmName }poster`}
                 width="218"
                 height="327"
               />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmName}</h2>
+              <h2 className="film-card__title">{filmsData[activeFilm].filmName}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmGenre}</span>
-                <span className="film-card__year">{filmYear}</span>
+                <span className="film-card__genre">{filmsData[activeFilm].filmGenre}</span>
+                <span className="film-card__year">{filmsData[activeFilm].filmReleased}</span>
               </p>
 
               <div className="film-card__buttons">
-                <button
+                <Link
                   className="btn btn--play film-card__button"
                   type="button"
+                  to={`player/${ activeFilm}`}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
+                </Link>
                 <Link
                   className="btn btn--list film-card__button"
                   type="button"
@@ -84,7 +87,7 @@ function MainPage({ filmName, filmGenre, filmYear, filmList }: FilmDataProps) {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  <span className="film-card__count">{myListFilmsNumber}</span>
                 </Link>
               </div>
             </div>
@@ -150,7 +153,7 @@ function MainPage({ filmName, filmGenre, filmYear, filmList }: FilmDataProps) {
           </ul>
 
           <div className="catalog__films-list">
-            {filmList.map((film) => <FilmCard key={film.id} filmName={film.FilmName} filmPreview={film.FilmPreview} />)}
+            <ListOfFilmCards filmList={filmList} handleActiveFilm={handleActiveFilm}/>
           </div>
 
           <div className="catalog__more">

@@ -1,12 +1,32 @@
-function MovePage() {
+import { Link } from 'react-router-dom';
+import { FilmData } from '../mocks/films';
+import { ActorsList } from '../mocks/actors';
+
+type MoviePageProps = {
+  filmsData: {[key: string]: FilmData};
+  activeFilm: string;
+  myListFilmsNumber: number;
+};
+
+function MoviePage({filmsData, activeFilm, myListFilmsNumber}: MoviePageProps) {
+  const rating = filmsData[activeFilm].overview.ratingScore;
+  let ratingName: string;
+  if(rating > 8) {
+    ratingName = 'VeryGood';
+  } else if(rating > 5) {
+    ratingName = 'Good';
+  } else{
+    ratingName = 'Bad';
+  }
+
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img
-              src="img/bg-the-grand-budapest-hotel.jpg"
-              alt="The Grand Budapest Hotel"
+              src={filmsData[activeFilm].filmMedia.filmBackgroundImage}
+              alt={filmsData[activeFilm].filmName}
             />
           </div>
 
@@ -40,14 +60,14 @@ function MovePage() {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{filmsData[activeFilm].filmName}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{filmsData[activeFilm].filmGenre}</span>
+                <span className="film-card__year">{filmsData[activeFilm].filmReleased}</span>
               </p>
 
               <div className="film-card__buttons">
-                <button
+                <Link to={`/player/${ activeFilm}`}
                   className="btn btn--play film-card__button"
                   type="button"
                 >
@@ -55,8 +75,8 @@ function MovePage() {
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
-                <button
+                </Link>
+                <Link to="/mylist"
                   className="btn btn--list film-card__button"
                   type="button"
                 >
@@ -64,8 +84,8 @@ function MovePage() {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                  <span className="film-card__count">{myListFilmsNumber}</span>
+                </Link>
                 <a href="add-review.html" className="btn film-card__button">
                     Add review
                 </a>
@@ -78,8 +98,8 @@ function MovePage() {
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={filmsData[activeFilm].filmMedia.filmPoster}
+                alt={`${filmsData[activeFilm].filmName }poster`}
                 width="218"
                 height="327"
               />
@@ -89,56 +109,43 @@ function MovePage() {
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
                   <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">
+                    <Link to={`/films/${ activeFilm}`} className="film-nav__link">
                         Overview
-                    </a>
+                    </Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">
+                    <Link to={`/films/${ activeFilm }/details`} className="film-nav__link">
                         Details
-                    </a>
+                    </Link>
                   </li>
                   <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">
+                    <Link to={`/films/${ activeFilm }/reviews`} className="film-nav__link">
                         Reviews
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
+                <div className="film-rating__score">{rating}</div>
                 <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
+                  <span className="film-rating__level">{ratingName}</span>
+                  <span className="film-rating__count">{filmsData[activeFilm].overview.numberOfRatings} ratings</span>
                 </p>
               </div>
 
               <div className="film-card__text">
                 <p>
-                    In the 1930s, the Grand Budapest Hotel is a popular European
-                    ski resort, presided over by concierge Gustave H. (Ralph
-                    Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s
-                    friend and protege.
-                </p>
-
-                <p>
-                    Gustave prides himself on providing first-class service to the
-                    hotel&apos;s guests, including satisfying the sexual needs of
-                    the many elderly women who stay there. When one of
-                    Gustave&apos;s lovers dies mysteriously, Gustave finds himself
-                    the recipient of a priceless painting and the chief suspect in
-                    her murder.
+                  {filmsData[activeFilm].overview.description}
                 </p>
 
                 <p className="film-card__director">
-                  <strong>Director: Wes Anderson</strong>
+                  <strong>Director: {filmsData[activeFilm].director}</strong>
                 </p>
 
                 <p className="film-card__starring">
                   <strong>
-                      Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe
-                      and other
+                    {ActorsList[activeFilm].join(', ')}
                   </strong>
                 </p>
               </div>
@@ -236,4 +243,4 @@ function MovePage() {
   );
 }
 
-export default MovePage;
+export default MoviePage;
