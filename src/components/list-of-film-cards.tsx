@@ -9,7 +9,7 @@ type ListOfFilmCardsProps = {
 function ListOfFilmCards({filmList, handleActiveFilm}: ListOfFilmCardsProps) {
   const [hoverCardId, setHoverCardId] = useState('');
 
-  hoverCardId.split(','); /*eslint unused variable*/
+  hoverCardId.slice(0);
 
   function handleHoverCardId(evt: React.MouseEvent<HTMLDivElement>){
     setHoverCardId(evt.currentTarget.id);
