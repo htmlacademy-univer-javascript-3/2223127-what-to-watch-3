@@ -1,16 +1,23 @@
-function Player() {
+import { Link } from 'react-router-dom';
+
+type PlayerProps = {
+  videoLink: string;
+  videoPoster: string;
+};
+
+function Player({videoLink, videoPoster}: PlayerProps) {
   return (
     <div className="player">
       <video
-        src="#"
+        src={videoLink}
         className="player__video"
-        poster="img/player-poster.jpg"
+        poster={videoPoster}
       >
       </video>
 
-      <button type="button" className="player__exit">
+      <Link type="button" className="player__exit" to="/">
           Exit
-      </button>
+      </Link>
 
       <div className="player__controls">
         <div className="player__controls-row">

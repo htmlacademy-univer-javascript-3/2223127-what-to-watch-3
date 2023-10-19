@@ -7,104 +7,104 @@ export const SelectedFilmSettings = {
 export const FilmList = [
   {
     id: '1',
-    FilmName: 'Fantastic Beasts: The Crimes of Grindelwald',
-    FilmPreview: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg'
+    filmName: 'Fantastic Beasts: The Crimes of Grindelwald',
+    filmPreview: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg'
   },
   {
     id: '2',
-    FilmName: 'Bohemian Rhapsody',
-    FilmPreview: 'img/bohemian-rhapsody.jpg'
+    filmName: 'Bohemian Rhapsody',
+    filmPreview: 'img/bohemian-rhapsody.jpg'
   },
   {
     id: '3',
-    FilmName: 'Macbeth',
-    FilmPreview: 'img/macbeth.jpg'
+    filmName: 'Macbeth',
+    filmPreview: 'img/macbeth.jpg'
   },
   {
     id: '4',
-    FilmName: 'Aviator',
-    FilmPreview: 'img/aviator.jpg'
+    filmName: 'Aviator',
+    filmPreview: 'img/aviator.jpg'
   },
   {
     id: '5',
-    FilmName: 'We need to talk about Kevin',
-    FilmPreview: 'img/we-need-to-talk-about-kevin.jpg'
+    filmName: 'We need to talk about Kevin',
+    filmPreview: 'img/we-need-to-talk-about-kevin.jpg'
   },
   {
     id: '6',
-    FilmName: 'What We Do in the Shadows',
-    FilmPreview: 'img/what-we-do-in-the-shadows.jpg'
+    filmName: 'What We Do in the Shadows',
+    filmPreview: 'img/what-we-do-in-the-shadows.jpg'
   },
   {
     id: '7',
-    FilmName: 'Revenant',
-    FilmPreview: 'img/revenant.jpg'
+    filmName: 'Revenant',
+    filmPreview: 'img/revenant.jpg'
   },
   {
     id: '8',
-    FilmName: 'Johnny English',
-    FilmPreview: 'img/johnny-english.jpg'
+    filmName: 'Johnny English',
+    filmPreview: 'img/johnny-english.jpg'
   },
   {
     id: '9',
-    FilmName: 'Shutter Island',
-    FilmPreview: 'img/shutter-island.jpg'
+    filmName: 'Shutter Island',
+    filmPreview: 'img/shutter-island.jpg'
   },
   {
     id: '10',
-    FilmName: 'Pulp Fiction',
-    FilmPreview: 'img/pulp-fiction.jpg'
+    filmName: 'Pulp Fiction',
+    filmPreview: 'img/pulp-fiction.jpg'
   },
   {
     id: '11',
-    FilmName: 'No Country for Old Men',
-    FilmPreview: 'img/no-country-for-old-men.jpg'
+    filmName: 'No Country for Old Men',
+    filmPreview: 'img/no-country-for-old-men.jpg'
   },
   {
     id: '12',
-    FilmName: 'Snatch',
-    FilmPreview: 'img/snatch.jpg'
+    filmName: 'Snatch',
+    filmPreview: 'img/snatch.jpg'
   },
   {
     id: '13',
-    FilmName: 'Moonrise Kingdom',
-    FilmPreview: 'img/moonrise-kingdom.jpg'
+    filmName: 'Moonrise Kingdom',
+    filmPreview: 'img/moonrise-kingdom.jpg'
   },
   {
     id: '14',
-    FilmName: 'Seven Years in Tibet',
-    FilmPreview: 'img/seven-years-in-tibet.jpg'
+    filmName: 'Seven Years in Tibet',
+    filmPreview: 'img/seven-years-in-tibet.jpg'
   },
   {
     id: '15',
-    FilmName: 'Midnight Special',
-    FilmPreview: 'img/midnight-special.jpg'
+    filmName: 'Midnight Special',
+    filmPreview: 'img/midnight-special.jpg'
   },
   {
     id: '16',
-    FilmName: 'War of the Worlds',
-    FilmPreview: 'img/war-of-the-worlds.jpg'
+    filmName: 'War of the Worlds',
+    filmPreview: 'img/war-of-the-worlds.jpg'
   },
   {
     id: '17',
-    FilmName: 'Dardjeeling Limited',
-    FilmPreview: 'img/dardjeeling-limited.jpg'
+    filmName: 'Dardjeeling Limited',
+    filmPreview: 'img/dardjeeling-limited.jpg'
   },
   {
     id: '18',
-    FilmName: 'Orlando',
-    FilmPreview: 'img/orlando.jpg'
+    filmName: 'Orlando',
+    filmPreview: 'img/orlando.jpg'
   },
   {
     id: '19',
-    FilmName: 'Mindhunter',
-    FilmPreview: 'img/mindhunter.jpg'
+    filmName: 'Mindhunter',
+    filmPreview: 'img/mindhunter.jpg'
   },
   {
     id: '20',
-    FilmName: 'Midnight Special',
-    FilmPreview: 'img/midnight-special.jpg'
+    filmName: 'Midnight Special',
+    filmPreview: 'img/midnight-special.jpg'
   }
 ] as const;
 
-export const IsAuth: boolean = false as const;
+export const IsAuth: boolean = true as const;

@@ -1,12 +1,18 @@
+import { Link } from 'react-router-dom';
+
 type FilmCardProps = {
   filmName: string;
   filmPreview: string;
+  filmId: string;
+  setHoverCardId: (evt: React.MouseEvent<HTMLDivElement>) => void;
+  deleteHoverCardId: () => void;
+  handleActiveFilm: (filmId: string) => void;
 };
 
 
-function FilmCard({filmName, filmPreview}: FilmCardProps) {
+function FilmCard({filmName, filmPreview, filmId, setHoverCardId, deleteHoverCardId, handleActiveFilm}: FilmCardProps) {
   return (
-    <article className="small-film-card catalog__films-card">
+    <article id={filmId} onMouseEnter={setHoverCardId} onMouseLeave={deleteHoverCardId} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
         <img
           src={filmPreview}
@@ -16,9 +22,9 @@ function FilmCard({filmName, filmPreview}: FilmCardProps) {
         />
       </div>
       <h3 className="small-film-card__title">
-        <a className="small-film-card__link" href="film-page.html">
+        <Link onClick={() => handleActiveFilm(filmId)} to={`/films/${ filmId}`} className="small-film-card__link">
           {filmName}
-        </a>
+        </Link>
       </h3>
     </article>
   );
