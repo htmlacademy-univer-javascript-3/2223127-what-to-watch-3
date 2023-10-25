@@ -12,8 +12,6 @@ function ListOfFilmCards({filmList, handleActiveFilm}: ListOfFilmCardsProps) {
   const [isHover, setIsHover] = useState(false);
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    let isNeedUpdate = true;
     if(hoverFilmRef.current !== '') {
       timer = setTimeout(() =>{
         setHoverFilmId(hoverFilmRef.current);
@@ -24,7 +22,6 @@ function ListOfFilmCards({filmList, handleActiveFilm}: ListOfFilmCardsProps) {
 
     return () => {
       clearTimeout(timer);
-      isNeedUpdate = false;
     };
   }, [isHover]);
 
