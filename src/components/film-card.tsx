@@ -1,28 +1,25 @@
 import { Link } from 'react-router-dom';
+import VideoPlayer from './videoplayer';
 
 type FilmCardProps = {
   filmName: string;
   filmPreview: string;
   filmId: string;
-  setHoverCardId: (evt: React.MouseEvent<HTMLDivElement>) => void;
-  deleteHoverCardId: () => void;
+  setHoverCardId: (id: string, checker: boolean) => void;
   handleActiveFilm: (filmId: string) => void;
+  hoverFilm: string;
+  previewVideoLink: string;
 };
 
 
-function FilmCard({filmName, filmPreview, filmId, setHoverCardId, deleteHoverCardId, handleActiveFilm}: FilmCardProps) {
+function FilmCard({filmName, filmPreview, filmId, hoverFilm, previewVideoLink, setHoverCardId, handleActiveFilm}: FilmCardProps) {
   return (
-    <article id={filmId} onMouseEnter={setHoverCardId} onMouseLeave={deleteHoverCardId} className="small-film-card catalog__films-card">
+    <article onMouseEnter={() => setHoverCardId(filmId, true)} onMouseLeave={() => setHoverCardId(filmId, false)} className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
-        <img
-          src={filmPreview}
-          alt={filmName}
-          width="280"
-          height="175"
-        />
+        <VideoPlayer filmPreview={filmPreview} isActive={hoverFilm === filmId} previewVideoLink={previewVideoLink} />
       </div>
       <h3 className="small-film-card__title">
-        <Link onClick={() => handleActiveFilm(filmId)} to={`/films/${ filmId}`} className="small-film-card__link">
+        <Link onClick={() => handleActiveFilm(filmId)} to={`/films/${filmId}`} className="small-film-card__link">
           {filmName}
         </Link>
       </h3>

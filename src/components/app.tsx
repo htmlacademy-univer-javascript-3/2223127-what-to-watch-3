@@ -54,9 +54,9 @@ function App(props: FilmDataProps) {
           >
           </Route>
           <Route path="/films/:id" element={<MoviePageLayout filmsData={props.filmsData} activeFilm={activeFilm} myListFilmsNumber={props.myListFilms.length} handleActiveFilm={handleActiveFilm}/>}>
-            <Route index element={<MoviePageOverview/>}/>
-            <Route path="details" element={<MoviePageDetails/>}></Route>
-            <Route path="reviews" element={<MoviePageReview/>}></Route>
+            <Route index element={<MoviePageOverview filmsData={props.filmsData} activeFilm={activeFilm}/>}/>
+            <Route path="details" element={<MoviePageDetails filmsData={props.filmsData} activeFilm={activeFilm}/>}></Route>
+            <Route path="reviews" element={<MoviePageReview activeFilm={activeFilm}/>}></Route>
           </Route>
           <Route path="/films/:id/review" element={<AddReview filmsData={props.filmsData} activeFilm={activeFilm}/>}></Route>
           <Route path="/player/:id" element={<Player videoLink={FilmsData[activeFilm].filmMedia.videoLink} videoPoster={FilmsData[activeFilm].filmMedia.filmBackgroundImage}/>}></Route>

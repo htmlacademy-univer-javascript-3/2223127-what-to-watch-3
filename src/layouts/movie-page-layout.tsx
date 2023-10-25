@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useParams } from 'react-router-dom';
 import { FilmData } from '../mocks/films';
 import { MoreLikeFilmList } from '../mocks/more-like-this';
 import ListOfFilmCards from '../components/list-of-film-cards';
@@ -15,38 +15,13 @@ function MoviePageLayout({filmsData, activeFilm, myListFilmsNumber, handleActive
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const params = useParams();
+  const prodId = params.id || '0';
+  handleActiveFilm(prodId);
 
-  const location = useLocation();
-  const path = location.pathname;
-  const rating = filmsData[activeFilm].overview.ratingScore;
-  const numberOfRatings = filmsData[activeFilm].overview.numberOfRatings;
-  const description = filmsData[activeFilm].overview.description;
-  const director = filmsData[activeFilm].director;
-  const time = filmsData[activeFilm].runTime;
-  const genre = filmsData[activeFilm].filmGenre;
-  const released = filmsData[activeFilm].filmReleased;
   const moviePageStyle = {
     backgroundColor: filmsData[activeFilm].filmMedia.filmBackgroundColor
   };
-  let ratingName: string;
-  if(rating > 8) {
-    ratingName = 'VeryGood';
-  } else if(rating > 5) {
-    ratingName = 'Good';
-  } else{
-    ratingName = 'Bad';
-  }
-
-  let outletData: unknown = [];
-
-  if(path.includes('/details')){
-    outletData = [director, time, genre, released, activeFilm];
-  } else if(path.includes('/reviews')){
-    outletData = [activeFilm];
-  } else{
-    outletData = [rating, ratingName, numberOfRatings, description, activeFilm, director];
-  }
-
 
   return (
     <>
@@ -154,7 +129,7 @@ function MoviePageLayout({filmsData, activeFilm, myListFilmsNumber, handleActive
                 </ul>
               </nav>
 
-              <Outlet context={outletData}/>
+              <Outlet/>
             </div>
           </div>
         </div>

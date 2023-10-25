@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type PlayerProps = {
   videoLink: string;
@@ -6,6 +6,8 @@ type PlayerProps = {
 };
 
 function Player({videoLink, videoPoster}: PlayerProps) {
+  const navigate = useNavigate();
+
   return (
     <div className="player">
       <video
@@ -14,10 +16,9 @@ function Player({videoLink, videoPoster}: PlayerProps) {
         poster={videoPoster}
       >
       </video>
-
-      <Link type="button" className="player__exit" to="/">
+      <button onClick={() => navigate('/')} type="button" className="player__exit">
           Exit
-      </Link>
+      </button>
 
       <div className="player__controls">
         <div className="player__controls-row">
