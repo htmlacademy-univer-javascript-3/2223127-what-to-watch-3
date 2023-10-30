@@ -1,18 +1,17 @@
 import {ChangeEvent, useState } from 'react';
 
 function CommentSendForm() {
-  const [commentFormData, setCommentFormData] = useState(
-    {
-      rating: 0,
-      comment: ''
-    }
-  );
+  const stars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setRatingForm] = useState(0);
+  const [commentForm, setCommentForm] = useState('xd');
 
-  const {comment} = commentFormData;
+  function handleRating(evt: React.MouseEvent<HTMLInputElement>){
+    setRatingForm(Number(evt.currentTarget.value));
+  }
 
-  function handleUserData(evt: React.MouseEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>){
-    const {name, value} = evt.currentTarget;
-    setCommentFormData({...commentFormData, [name]: value});
+  function handleComment(evt: ChangeEvent<HTMLTextAreaElement>){
+    setCommentForm(evt.currentTarget.value);
   }
 
   return (
@@ -20,125 +19,24 @@ function CommentSendForm() {
       <form action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
-            <input
-              className="rating__input"
-              id="star-10"
-              type="radio"
-              name="rating"
-              value="10"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-10">
-                    Rating 10
-            </label>
-
-            <input
-              className="rating__input"
-              id="star-9"
-              type="radio"
-              name="rating"
-              value="9"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-9">
-                    Rating 9
-            </label>
-
-            <input
-              className="rating__input"
-              id="star-8"
-              type="radio"
-              name="rating"
-              value="8"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-8">
-                    Rating 8
-            </label>
-
-            <input
-              className="rating__input"
-              id="star-7"
-              type="radio"
-              name="rating"
-              value="7"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-7">
-                    Rating 7
-            </label>
-
-            <input
-              className="rating__input"
-              id="star-6"
-              type="radio"
-              name="rating"
-              value="6"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-6">
-                    Rating 6
-            </label>
-
-            <input
-              className="rating__input"
-              id="star-5"
-              type="radio"
-              name="rating"
-              value="5"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-5">
-                    Rating 5
-            </label>
-
-            <input
-              className="rating__input"
-              id="star-4"
-              type="radio"
-              name="rating"
-              value="4"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-4">
-                    Rating 4
-            </label>
-
-            <input
-              className="rating__input"
-              id="star-3"
-              type="radio"
-              name="rating"
-              value="3"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-3">
-                    Rating 3
-            </label>
-
-            <input
-              className="rating__input"
-              id="star-2"
-              type="radio"
-              name="rating"
-              value="2"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-2">
-                    Rating 2
-            </label>
-
-            <input
-              className="rating__input"
-              id="star-1"
-              type="radio"
-              name="rating"
-              value="1"
-              onClick={handleUserData}
-            />
-            <label className="rating__label" htmlFor="star-1">
-                    Rating 1
-            </label>
+            {
+              stars.reverse().map((star) => (
+                <div key={star}>
+                  <input
+                    className="rating__input"
+                    id={`star-${star}`}
+                    type="radio"
+                    name="rating"
+                    value={star}
+                    onClick={handleRating}
+                  />
+                  <label className="rating__label" htmlFor={`star-${star}`}>
+                    Rating {star}
+                  </label>
+                </div>
+              )
+              )
+            }
           </div>
         </div>
 
@@ -148,9 +46,9 @@ function CommentSendForm() {
             name="comment"
             id="review-text"
             placeholder="Review text"
-            onChange={handleUserData}
+            onChange={handleComment}
+            defaultValue={commentForm}
           >
-            {comment}
           </textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">

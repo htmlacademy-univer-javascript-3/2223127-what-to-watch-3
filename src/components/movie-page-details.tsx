@@ -1,11 +1,19 @@
-import { useOutletContext } from 'react-router-dom';
 import { ActorsList } from '../mocks/actors';
+import { FilmData } from '../mocks/films';
 
-function MoviePageDetails() {
+type MoviePageDetailProps = {
+  filmsData: {[key: string]: FilmData};
+  activeFilm: string;
+};
 
-  const [director, time, genre, released, activeFilm]: [string, number, string, number, string] = useOutletContext();
-  const hourse = Math.floor(time / 60);
-  const minutes = time - hourse * 60;
+function MoviePageDetails({filmsData, activeFilm}: MoviePageDetailProps) {
+
+  const director = filmsData[activeFilm].director;
+  const time = filmsData[activeFilm].runTime;
+  const genre = filmsData[activeFilm].filmGenre;
+  const released = filmsData[activeFilm].filmReleased;
+  const hours = Math.floor(time / 60);
+  const minutes = time - hours * 60;
 
   return (
     <div className="film-card__text film-card__row">
@@ -33,7 +41,7 @@ function MoviePageDetails() {
           <strong className="film-card__details-name">
                         Run Time
           </strong>
-          <span className="film-card__details-value">{hourse !== 0 && `${hourse }h`} {minutes}m</span>
+          <span className="film-card__details-value">{hours !== 0 && `${hours }h`} {minutes}m</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

@@ -1,9 +1,27 @@
-import { useOutletContext } from 'react-router-dom';
 import { ActorsList } from '../mocks/actors';
+import { FilmData } from '../mocks/films';
 
-function MoviePageOverview() {
+type MoviePageOverviewProps = {
+  filmsData: {[key: string]: FilmData};
+  activeFilm: string;
+};
 
-  const [rating, ratingName, numberOfRatings, description, activeFilm, director]: [number, string, number, string, string, string] = useOutletContext();
+function MoviePageOverview({filmsData, activeFilm}: MoviePageOverviewProps) {
+
+  const rating = filmsData[activeFilm].overview.ratingScore;
+  const numberOfRatings = filmsData[activeFilm].overview.numberOfRatings;
+  const description = filmsData[activeFilm].overview.description;
+  const director = filmsData[activeFilm].director;
+
+  let ratingName: string;
+  if(rating > 8) {
+    ratingName = 'VeryGood';
+  } else if(rating > 5) {
+    ratingName = 'Good';
+  } else{
+    ratingName = 'Bad';
+  }
+
   return (
     <>
       <div className="film-rating">

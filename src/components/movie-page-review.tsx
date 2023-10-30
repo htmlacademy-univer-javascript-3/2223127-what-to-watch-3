@@ -1,10 +1,11 @@
-import { useOutletContext } from 'react-router-dom';
 import { ReviewList } from '../mocks/review';
 import Review from './review';
 
-function MoviePageReview() {
+type MoviePageReviewProps = {
+  activeFilm: string;
+};
 
-  const [activeFilm]: [string] = useOutletContext();
+function MoviePageReview({activeFilm}: MoviePageReviewProps) {
   const reviews = ReviewList[activeFilm];
   return (
     <div className="film-card__reviews film-card__row">
