@@ -149,10 +149,10 @@ export const FilmsData: {[key: string]: FilmData} = {
     },
   },
   '8':{
-    filmName: 'Peter Howitt',
+    filmName: 'Johnny English',
     filmGenre: 'Comedy',
     filmReleased: 2003,
-    director: 'Alejandro G. Iñárritu',
+    director: 'Peter Howitt',
     runTime: 88,
     filmMedia: {
       filmPoster:'https://13.design.pages.academy/static/film/poster/Johnny_English.jpg',

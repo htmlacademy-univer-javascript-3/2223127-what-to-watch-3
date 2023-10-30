@@ -1,8 +1,8 @@
 import { Link, Outlet, useParams } from 'react-router-dom';
 import { FilmData } from '../mocks/films';
-import { MoreLikeFilmList } from '../mocks/more-like-this';
 import ListOfFilmCards from '../components/list-of-film-cards';
 import { useEffect } from 'react';
+import { FilmList } from '../data';
 
 type MoviePageLayoutProps = {
     filmsData: {[key: string]: FilmData};
@@ -23,6 +23,9 @@ function MoviePageLayout({filmsData, activeFilm, myListFilmsNumber, handleActive
     backgroundColor: filmsData[activeFilm].filmMedia.filmBackgroundColor
   };
 
+  const genre = filmsData[activeFilm].filmGenre;
+
+  const moreLikeFilmList = FilmList.filter((film) => film.genre === genre).slice(0, 4);
   return (
     <>
       <section className="film-card film-card--full" style={moviePageStyle}>
@@ -66,7 +69,7 @@ function MoviePageLayout({filmsData, activeFilm, myListFilmsNumber, handleActive
             <div className="film-card__desc">
               <h2 className="film-card__title">{filmsData[activeFilm].filmName}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmsData[activeFilm].filmGenre}</span>
+                <span className="film-card__genre">{genre}</span>
                 <span className="film-card__year">{filmsData[activeFilm].filmReleased}</span>
               </p>
 
@@ -140,7 +143,7 @@ function MoviePageLayout({filmsData, activeFilm, myListFilmsNumber, handleActive
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <ListOfFilmCards filmList={MoreLikeFilmList} handleActiveFilm={handleActiveFilm}/>
+            <ListOfFilmCards filmList={moreLikeFilmList} handleActiveFilm={handleActiveFilm}/>
           </div>
         </section>
 

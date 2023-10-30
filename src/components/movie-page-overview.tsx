@@ -13,13 +13,14 @@ function MoviePageOverview({filmsData, activeFilm}: MoviePageOverviewProps) {
   const description = filmsData[activeFilm].overview.description;
   const director = filmsData[activeFilm].director;
 
-  let ratingName: string;
-  if(rating > 8) {
-    ratingName = 'VeryGood';
-  } else if(rating > 5) {
-    ratingName = 'Good';
-  } else{
-    ratingName = 'Bad';
+  function getRatingName(){
+    if(rating > 8) {
+      return 'VeryGood';
+    } else if(rating > 5) {
+      return 'Good';
+    } else{
+      return 'Bad';
+    }
   }
 
   return (
@@ -27,7 +28,7 @@ function MoviePageOverview({filmsData, activeFilm}: MoviePageOverviewProps) {
       <div className="film-rating">
         <div className="film-rating__score">{rating}</div>
         <p className="film-rating__meta">
-          <span className="film-rating__level">{ratingName}</span>
+          <span className="film-rating__level">{getRatingName()}</span>
           <span className="film-rating__count">{numberOfRatings} ratings</span>
         </p>
       </div>
