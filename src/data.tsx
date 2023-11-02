@@ -1,9 +1,3 @@
-export const SelectedFilmSettings = {
-  FilmName: 'The Grand Budapest Hotel',
-  FilmGenre: 'Drama',
-  FilmYear: 2014,
-} as const;
-
 export const FilmList = [
   {
     id: '1',
@@ -145,6 +139,6 @@ export const FilmList = [
     previewVideoLink: 'https://13.design.pages.academy/static//film/video/dog.mp4',
     genre: 'Fantasy'
   }
-] as const;
+];
 
 export const IsAuth: boolean = true as const;
