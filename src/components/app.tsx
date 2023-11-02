@@ -15,7 +15,6 @@ import MoviePageReview from './movie-page-review';
 
 type FilmDataProps = {
   filmsData: {[key: string]: FilmData};
-  filmList: readonly { [key: string]: string}[];
   myListFilms: readonly { [key: string]: string}[];
   isAuth: boolean;
 };
@@ -34,7 +33,6 @@ function App(props: FilmDataProps) {
         <Route path="/">
           <Route index element={
             <MainPage
-              filmList={props.filmList}
               filmsData={props.filmsData}
               myListFilmsNumber={props.myListFilms.length}
               activeFilm={activeFilm}
