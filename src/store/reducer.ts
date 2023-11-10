@@ -4,7 +4,7 @@ import { changeGenre, changeListFilmsByGenre } from './action';
 
 const initialState = {
   genre: 'All genres',
-  filmByGenre: FilmList
+  filmsByGenre: FilmList
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -15,9 +15,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeListFilmsByGenre, (state) => {
       if(state.genre === 'All genres'){
-        state.filmByGenre = FilmList;
+        state.filmsByGenre = FilmList;
       } else{
-        state.filmByGenre = FilmList.filter((film) => film.genre === state.genre);
+        state.filmsByGenre = FilmList.filter((film) => film.genre === state.genre);
       }
     });
 });

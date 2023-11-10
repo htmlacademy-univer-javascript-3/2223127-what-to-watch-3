@@ -3,6 +3,8 @@ import { FilmData } from '../mocks/films';
 import ListOfFilmCards from '../components/list-of-film-cards';
 import ListOfGenres from '../components/list-of-genres';
 import { useAppSelector } from '../hooks';
+import ShowMore from '../components/show-more';
+import { useState } from 'react';
 
 type FilmDataProps = {
   filmsData: {[key: string]: FilmData};
@@ -12,7 +14,13 @@ type FilmDataProps = {
 };
 
 function MainPage({filmsData, myListFilmsNumber, activeFilm, handleActiveFilm }: FilmDataProps) {
-  const filmByGenre = useAppSelector((state) => state.filmByGenre);
+  const filmsByGenre = useAppSelector((state) => state.filmsByGenre);
+
+  const [numberFilmCardsVisible, setCountFilmCardsVisible] = useState(8);
+
+  function showMoreClickHandle(){
+    setCountFilmCardsVisible(numberFilmCardsVisible + 8);
+  }
 
   return (
     <>
@@ -103,14 +111,9 @@ function MainPage({filmsData, myListFilmsNumber, activeFilm, handleActiveFilm }:
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <ListOfGenres/>
           <div className="catalog__films-list">
-            <ListOfFilmCards filmList={filmByGenre} handleActiveFilm={handleActiveFilm}/>
+            <ListOfFilmCards filmList={filmsByGenre} handleActiveFilm={handleActiveFilm} numberFilmCardsVisible={numberFilmCardsVisible}/>
           </div>
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
-          </div>
+          {numberFilmCardsVisible < filmsByGenre.length && <ShowMore onClickShowMore={showMoreClickHandle}/>}
         </section>
 
         <footer className="page-footer">
