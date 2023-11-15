@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import FilmCard from './film-card';
+import { Film } from '../types/film-data';
 
 type ListOfFilmCardsProps = {
-    filmList: readonly { [key: string]: string}[];
+    filmList: Film[];
     handleActiveFilm: (filmId: string) => void;
     numberFilmCardsVisible?: number;
   };
@@ -41,9 +42,9 @@ function ListOfFilmCards({filmList, handleActiveFilm, numberFilmCardsVisible}: L
     <>
       {filmList.map((film, i) => {
         if(!numberFilmCardsVisible){
-          return <FilmCard key={film.id} filmId={film.id} hoverFilm={hoverFilm} filmName={film.filmName} filmPreview={film.filmPreview} previewVideoLink={film.previewVideoLink} setHoverCardId={handleHoverCardId} handleActiveFilm={handleActiveFilm} />;
+          return <FilmCard key={film.id} filmId={film.id} hoverFilm={hoverFilm} filmName={film.name} filmPreview={film.previewImage} previewVideoLink={film.previewVideoLink} setHoverCardId={handleHoverCardId} handleActiveFilm={handleActiveFilm} />;
         } else if(i <= numberFilmCardsVisible - 1){
-          return <FilmCard key={film.id} filmId={film.id} hoverFilm={hoverFilm} filmName={film.filmName} filmPreview={film.filmPreview} previewVideoLink={film.previewVideoLink} setHoverCardId={handleHoverCardId} handleActiveFilm={handleActiveFilm} />;
+          return <FilmCard key={film.id} filmId={film.id} hoverFilm={hoverFilm} filmName={film.name} filmPreview={film.previewImage} previewVideoLink={film.previewVideoLink} setHoverCardId={handleHoverCardId} handleActiveFilm={handleActiveFilm} />;
         }
       })}
     </>

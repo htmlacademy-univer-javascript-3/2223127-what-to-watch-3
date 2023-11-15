@@ -1,19 +1,21 @@
-import { FilmList } from '../data';
-import { useAppDispatch } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { changeGenre, changeListFilmsByGenre } from '../store/action';
 import GenreListItem from './genre-list-item';
 
-function setUniqGenre(){
-  const list: string[] = [];
-  FilmList.map((film) => {
-    if(!list.includes(film.genre)){
-      list.push(film.genre);
-    }
-  });
-  return list;
-}
-
 function ListOfGenres() {
+  const filmList = useAppSelector((state) => state.filmsList);
+
+  function setUniqGenre(){
+    const list: string[] = [];
+    filmList.map((film) => {
+      if(!list.includes(film.genre)){
+        list.push(film.genre);
+      }
+    });
+    return list;
+  }
+
+
   const genreList = setUniqGenre();
 
   const dispatch = useAppDispatch();

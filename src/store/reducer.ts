@@ -1,10 +1,19 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { FilmList } from '../data';
-import { changeGenre, changeListFilmsByGenre } from './action';
+import { changeGenre, changeListFilmsByGenre, setListFilms, setListFilmsLoadingStatus } from './action';
+import { Film } from '../types/film-data';
 
-const initialState = {
+type InitialState = {
+  genre: string;
+  isFilmListLoading: boolean;
+  filmsList: Film[];
+  filmsByGenre: Film[];
+}
+
+const initialState: InitialState = {
   genre: 'All genres',
-  filmsByGenre: FilmList
+  isFilmListLoading: false,
+  filmsList: [],
+  filmsByGenre: []
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -15,9 +24,16 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeListFilmsByGenre, (state) => {
       if(state.genre === 'All genres'){
-        state.filmsByGenre = FilmList;
+        state.filmsByGenre = state.filmsList;
       } else{
-        state.filmsByGenre = FilmList.filter((film) => film.genre === state.genre);
+        state.filmsByGenre = state.filmsList.filter((film) => film.genre === state.genre);
       }
+    })
+    .addCase(setListFilms, (state, action) => {
+      state.filmsList = action.payload;
+      state.filmsByGenre = action.payload;
+    })
+    .addCase(setListFilmsLoadingStatus, (state, action) => {
+      state.isFilmListLoading = action.payload;
     });
 });

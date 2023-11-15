@@ -15,7 +15,6 @@ function VideoPlayer({filmPreview, isActive, previewVideoLink}: VideoPlayerProps
     videoRef.current.load();
   }
 
-
   return (
     <video ref={videoRef} poster={filmPreview} height='175px' width='280px' muted src={previewVideoLink}></video>
   );

@@ -2,16 +2,17 @@ import { Link, Outlet, useParams } from 'react-router-dom';
 import { FilmData } from '../mocks/films';
 import ListOfFilmCards from '../components/list-of-film-cards';
 import { useEffect } from 'react';
-import { FilmList } from '../data';
+import { Film } from '../types/film-data';
 
 type MoviePageLayoutProps = {
     filmsData: {[key: string]: FilmData};
+    miniListCards: Film[];
     activeFilm: string;
     myListFilmsNumber: number;
     handleActiveFilm: (filmId: string) => void;
   };
 
-function MoviePageLayout({filmsData, activeFilm, myListFilmsNumber, handleActiveFilm}: MoviePageLayoutProps) {
+function MoviePageLayout({filmsData, miniListCards, activeFilm, myListFilmsNumber, handleActiveFilm}: MoviePageLayoutProps) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -25,7 +26,7 @@ function MoviePageLayout({filmsData, activeFilm, myListFilmsNumber, handleActive
 
   const genre = filmsData[activeFilm].filmGenre;
 
-  const moreLikeFilmList = FilmList.filter((film) => film.genre === genre).slice(0, 4);
+  const moreLikeFilmList = miniListCards.filter((film) => film.genre === genre).slice(0, 4);
   return (
     <>
       <section className="film-card film-card--full" style={moviePageStyle}>
