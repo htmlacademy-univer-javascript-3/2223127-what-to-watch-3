@@ -1,11 +1,8 @@
-import ListOfFilmCards from '../components/list-of-film-cards';
-
 type MyListProps = {
   myListFilms: readonly { [key: string]: string}[];
-  handleActiveFilm: (filmId: string) => void;
 };
 
-function MyList({myListFilms, handleActiveFilm}: MyListProps) {
+function MyList({myListFilms}: MyListProps) {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -41,7 +38,7 @@ function MyList({myListFilms, handleActiveFilm}: MyListProps) {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <ListOfFilmCards filmList={myListFilms} handleActiveFilm={handleActiveFilm}/>
+          <p>Вкладка любимых фильмов</p>
         </div>
       </section>
 
