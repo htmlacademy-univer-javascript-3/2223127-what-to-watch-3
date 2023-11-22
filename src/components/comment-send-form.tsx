@@ -1,10 +1,17 @@
-import {ChangeEvent, useState } from 'react';
+import {ChangeEvent, SyntheticEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { addComment } from '../store/api-actions/post-action';
 
-function CommentSendForm() {
+type CommentSendFormProps = {
+  filmId: string;
+}
+
+function CommentSendForm({filmId}: CommentSendFormProps) {
+  const dispatch = useAppDispatch();
   const stars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setRatingForm] = useState(0);
-  const [commentForm, setCommentForm] = useState('xd');
+  const [rating, setRatingForm] = useState(0);
+  const [commentForm, setCommentForm] = useState('');
+  const errorMessage = useAppSelector((state) => state.errorMessage);
 
   function handleRating(evt: React.MouseEvent<HTMLInputElement>){
     setRatingForm(Number(evt.currentTarget.value));
@@ -14,9 +21,14 @@ function CommentSendForm() {
     setCommentForm(evt.currentTarget.value);
   }
 
+  function handleSubmit(evt: SyntheticEvent){
+    evt.preventDefault();
+    dispatch(addComment({filmId: filmId, comment: commentForm, rating: rating}));
+  }
+
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form onSubmit={handleSubmit} action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
             {
@@ -50,6 +62,7 @@ function CommentSendForm() {
             defaultValue={commentForm}
           >
           </textarea>
+          {errorMessage}
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">
                     Post

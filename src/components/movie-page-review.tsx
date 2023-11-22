@@ -1,19 +1,15 @@
-import { ReviewList } from '../mocks/review';
+import { useAppSelector } from '../hooks';
 import Review from './review';
 
-type MoviePageReviewProps = {
-  activeFilm: string;
-};
-
-function MoviePageReview({activeFilm}: MoviePageReviewProps) {
-  const reviews = ReviewList[activeFilm];
+function MoviePageReview() {
+  const reviews = useAppSelector((state) => state.filmComments);
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">
-        {reviews.map((review, index) => index < reviews.length / 2 && <Review key={review.id} description={review.review} author={review.reviewAuthor} date={review.reviewDate} rating={review.reviewRatingScore}/>)}
+        {reviews.map((review, index) => index < reviews.length / 2 && <Review key={review.id} description={review.comment} author={review.user} date={review.date} rating={review.rating}/>)}
       </div>
       <div className="film-card__reviews-col">
-        {reviews.map((review, index) => index >= reviews.length / 2 && <Review key={review.id} description={review.review} author={review.reviewAuthor} date={review.reviewDate} rating={review.reviewRatingScore} />)}
+        {reviews.map((review, index) => index >= reviews.length / 2 && <Review key={review.id} description={review.comment} author={review.user} date={review.date} rating={review.rating} />)}
       </div>
     </div>
   );

@@ -1,29 +1,13 @@
 type ReviewProps = {
     description: string;
     author: string;
-    date: Date;
+    date: string;
     rating: number;
   };
 
-const Month = {
-  '1': 'January',
-  '2': 'February',
-  '3': 'March',
-  '4': 'April',
-  '5': 'May',
-  '6': 'June',
-  '7': 'July',
-  '8': 'August',
-  '9': 'September',
-  '10': 'October',
-  '11': 'November',
-  '12': 'December',
-};
-
 function Review({ description, author, date, rating }: ReviewProps) {
-  const month = date.getMonth();
-  const day = date.getDate();
-  const year = date.getFullYear();
+  const convertedDate = date.split('T')[0].split('-');
+
   return (
     <div className="review">
       <blockquote className="review__quote">
@@ -34,7 +18,7 @@ function Review({ description, author, date, rating }: ReviewProps) {
         <footer className="review__details">
           <cite className="review__author">{author}</cite>
           <time className="review__date" dateTime="2016-12-24">
-            {Month[month - 1 as unknown as keyof typeof Month]} {day}, {year}
+            {`${convertedDate[2]}.${convertedDate[1]}.${convertedDate[0]}`}
           </time>
         </footer>
       </blockquote>

@@ -5,7 +5,7 @@ export type UserData = {
     token: string;
 }
 
-export const InitialUserData = {
+export const InitialUserData: UserData = {
   name: '',
   avatarUrl: '',
   email: '',

@@ -1,17 +1,15 @@
-import { ActorsList } from '../mocks/actors';
-import { FilmData } from '../mocks/films';
+import { OpenFilmData } from '../types/open-film-data';
 
 type MoviePageDetailProps = {
-  filmsData: {[key: string]: FilmData};
-  activeFilm: string;
+  activeFilm: OpenFilmData;
 };
 
-function MoviePageDetails({filmsData, activeFilm}: MoviePageDetailProps) {
+function MoviePageDetails({activeFilm}: MoviePageDetailProps) {
 
-  const director = filmsData[activeFilm].director;
-  const time = filmsData[activeFilm].runTime;
-  const genre = filmsData[activeFilm].filmGenre;
-  const released = filmsData[activeFilm].filmReleased;
+  const director = activeFilm.director;
+  const time = activeFilm.runtime;
+  const genre = activeFilm.genre;
+  const released = activeFilm.released;
   const hours = Math.floor(time / 60);
   const minutes = time - hours * 60;
 
@@ -31,7 +29,7 @@ function MoviePageDetails({filmsData, activeFilm}: MoviePageDetailProps) {
                         Starring
           </strong>
           <span className="film-card__details-value">
-            {ActorsList[activeFilm].join(',\n ')}
+            {activeFilm.starring.join(',\n ')}
           </span>
         </p>
       </div>
