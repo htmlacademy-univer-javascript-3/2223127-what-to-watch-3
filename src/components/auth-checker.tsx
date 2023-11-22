@@ -1,13 +1,14 @@
 import {Navigate} from 'react-router-dom';
+import { AuthorizationStatuses } from '../types/state';
 
 type AuthCheckerProps ={
     children: JSX.Element;
-    isAuth: boolean;
+    isAuth: AuthorizationStatuses;
 }
 
 function AuthChecker({ children, isAuth}: AuthCheckerProps) {
   return (
-    isAuth ? children : <Navigate to={'/login'}/>
+    isAuth === AuthorizationStatuses.authorized ? children : <Navigate to={'/login'}/>
   );
 }
 
