@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { AuthorizationStatuses } from '../types/state';
 import HeaderSignIn from './header-sign-in';
-import { changeAuthStatus } from '../store/action';
+import { logout } from '../store/api-actions/delete-actions';
 
 function Header() {
   const location = useLocation();
@@ -11,7 +11,7 @@ function Header() {
   const isAuth = useAppSelector((state) => state.authorizationStatus);
   const pageClass = location.pathname === '/login' ? 'user-page__head' : 'film-card_head';
   function unLoginHandler(){
-    dispatch(changeAuthStatus(AuthorizationStatuses.notAuthorized));
+    dispatch(logout());
   }
 
 

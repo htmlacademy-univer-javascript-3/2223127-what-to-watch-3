@@ -1,8 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeAuthStatus, changeGenre, changeListFilmsByGenre, setErrorMessage, setListFilms, setListFilmsLoadingStatus, setUserData } from './action';
+import { changeAuthStatus, changeGenre, changeListFilmsByGenre, setAddedComment, setCommentsFilm, setCurrentFilmData, setErrorMessage, setListFilms, setListFilmsLoadingStatus, setSimilarFilms, setUserData } from './action';
 import { Film } from '../types/film-data';
 import { AuthorizationStatuses, LoadStatuses } from '../types/state';
 import { InitialUserData, UserData } from '../types/user-data';
+import { FilmComment, InitialOpenFilmData, OpenFilmData } from '../types/open-film-data';
 
 type InitialState = {
   errorMessage: string;
@@ -12,16 +13,22 @@ type InitialState = {
   filmsByGenre: Film[];
   authorizationStatus: AuthorizationStatuses;
   userData: UserData;
+  openFilmData: OpenFilmData;
+  similarFilms: Film[];
+  filmComments: FilmComment[];
 }
 
 const initialState: InitialState = {
   errorMessage: '',
-  authorizationStatus: AuthorizationStatuses.notAuthorized,
+  authorizationStatus: AuthorizationStatuses.undefined,
   userData: InitialUserData,
   genre: 'All genres',
   isFilmListLoading: LoadStatuses.undefined,
   filmsList: [],
-  filmsByGenre: []
+  filmsByGenre: [],
+  openFilmData: InitialOpenFilmData,
+  similarFilms: [],
+  filmComments: [],
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -52,5 +59,17 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(changeAuthStatus, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(setCurrentFilmData, (state, action) => {
+      state.openFilmData = action.payload;
+    })
+    .addCase(setSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload;
+    })
+    .addCase(setCommentsFilm, (state, action) => {
+      state.filmComments = action.payload;
+    })
+    .addCase(setAddedComment, (state, action) => {
+      state.filmComments.push(action.payload);
     });
 });

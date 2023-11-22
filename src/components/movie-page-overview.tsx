@@ -1,17 +1,15 @@
-import { ActorsList } from '../mocks/actors';
-import { FilmData } from '../mocks/films';
+import { OpenFilmData } from '../types/open-film-data';
 
 type MoviePageOverviewProps = {
-  filmsData: {[key: string]: FilmData};
-  activeFilm: string;
+  activeFilm: OpenFilmData;
 };
 
-function MoviePageOverview({filmsData, activeFilm}: MoviePageOverviewProps) {
+function MoviePageOverview({activeFilm}: MoviePageOverviewProps) {
 
-  const rating = filmsData[activeFilm].overview.ratingScore;
-  const numberOfRatings = filmsData[activeFilm].overview.numberOfRatings;
-  const description = filmsData[activeFilm].overview.description;
-  const director = filmsData[activeFilm].director;
+  const rating = activeFilm.rating;
+  const numberOfRatings = activeFilm.scoresCount;
+  const description = activeFilm.description;
+  const director = activeFilm.director;
 
   function getRatingName(){
     if(rating > 8) {
@@ -44,7 +42,7 @@ function MoviePageOverview({filmsData, activeFilm}: MoviePageOverviewProps) {
 
         <p className="film-card__starring">
           <strong>
-            {ActorsList[activeFilm].join(', ')}
+            {activeFilm.starring.join(', ')}
           </strong>
         </p>
       </div>

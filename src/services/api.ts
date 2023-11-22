@@ -1,6 +1,6 @@
 import axios, {AxiosInstance, AxiosError} from 'axios';
 import {StatusCodes} from 'http-status-codes';
-import { changeAuthStatus, setErrorMessage } from '../store/action';
+import { changeAuthStatus, redirectToRoute, setErrorMessage } from '../store/action';
 import { store } from '../store';
 import { AuthorizationStatuses } from '../types/state';
 
@@ -25,21 +25,27 @@ export const createAPI = (): AxiosInstance => {
     config.headers = config.headers ?? {};
     const json = localStorage.getItem('token') || '';
     if (json) {
-      config.headers.authorization = JSON.parse(json) as string;
+      config.headers['x-token'] = JSON.parse(json) as string;
     }
     return config;
   }, (error) => Promise.reject(error));
 
   api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+      store.dispatch(setErrorMessage(''));
+      return response;
+    },
     (error: AxiosError<DetailMessageType>) => {
       if (error.response?.status === StatusCodes.UNAUTHORIZED) {
-        store.dispatch(changeAuthStatus(AuthorizationStatuses.authorized));
+        store.dispatch(changeAuthStatus(AuthorizationStatuses.notAuthorized));
       }
       if(error.response?.status === StatusCodes.BAD_REQUEST){
         const errorData = error.response.data.details;
         const message = errorData.map((data) => data.messages.join(', ')).join(', ');
         store.dispatch(setErrorMessage(message));
+      }
+      if(error.response?.status === StatusCodes.NOT_FOUND){
+        store.dispatch(redirectToRoute('/notFound'));
       }
       throw error;
     }

@@ -1,23 +1,28 @@
 import { Link } from 'react-router-dom';
-import { FilmData } from '../mocks/films';
 import ListOfFilmCards from '../components/list-of-film-cards';
 import ListOfGenres from '../components/list-of-genres';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import ShowMore from '../components/show-more';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from '../components/header';
+import { OpenFilmData } from '../types/open-film-data';
+import { checkAuthorization } from '../store/api-actions/get-actions';
 
 type FilmDataProps = {
-  filmsData: {[key: string]: FilmData};
   myListFilmsNumber: number;
-  activeFilm: string;
+  activeFilm: OpenFilmData;
   handleActiveFilm: (filmId: string) => void;
 };
 
-function MainPage({filmsData, myListFilmsNumber, activeFilm, handleActiveFilm }: FilmDataProps) {
+function MainPage({myListFilmsNumber, activeFilm, handleActiveFilm }: FilmDataProps) {
+  const dispatch = useAppDispatch();
   const filmsByGenre = useAppSelector((state) => state.filmsByGenre);
 
   const [numberFilmCardsVisible, setCountFilmCardsVisible] = useState(8);
+
+  useEffect(() => {
+    dispatch(checkAuthorization());
+  });
 
   function showMoreClickHandle(){
     setCountFilmCardsVisible(numberFilmCardsVisible + 8);
@@ -28,8 +33,8 @@ function MainPage({filmsData, myListFilmsNumber, activeFilm, handleActiveFilm }:
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src={filmsData[activeFilm].filmMedia.filmBackgroundImage}
-            alt={filmsData[activeFilm].filmName}
+            src={activeFilm.backgroundImage}
+            alt={activeFilm.name}
           />
         </div>
 
@@ -39,25 +44,25 @@ function MainPage({filmsData, myListFilmsNumber, activeFilm, handleActiveFilm }:
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src={filmsData[activeFilm].filmMedia.filmPoster}
-                alt={`${filmsData[activeFilm].filmName }poster`}
+                src={activeFilm.posterImage}
+                alt={`${activeFilm.posterImage} poster`}
                 width="218"
                 height="327"
               />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{filmsData[activeFilm].filmName}</h2>
+              <h2 className="film-card__title">{activeFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmsData[activeFilm].filmGenre}</span>
-                <span className="film-card__year">{filmsData[activeFilm].filmReleased}</span>
+                <span className="film-card__genre">{activeFilm.genre}</span>
+                <span className="film-card__year">{activeFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
                 <Link
                   className="btn btn--play film-card__button"
                   type="button"
-                  to={`player/${ activeFilm}`}
+                  to={`player/${activeFilm.id}`}
                 >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
