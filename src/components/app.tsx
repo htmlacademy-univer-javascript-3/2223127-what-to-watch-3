@@ -1,5 +1,5 @@
 import MainPage from '../pages/main-page';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 import SignIn from '../pages/sign-in';
 import MyList from '../pages/my-list';
 import AddReview from '../pages/add-review';
@@ -14,38 +14,42 @@ import MoviePageDetails from './movie-page-details';
 import MoviePageReview from './movie-page-review';
 import { useAppSelector } from '../hooks';
 import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../types/state';
-import { getListOfFilms } from '../store/api-actions/get-actions';
+import { AppDispatch, AuthorizationStatuses, LoadStatuses } from '../types/state';
+import {getListOfFilms } from '../store/api-actions/get-actions';
 import LoadingScreen from './loading-screen';
+import HistoryRouter from '../history-route';
+import browserHistory from './browser-history';
 
 type FilmDataProps = {
   filmsData: {[key: string]: FilmData};
   myListFilms: readonly { [key: string]: string}[];
-  isAuth: boolean;
 };
 
 function App(props: FilmDataProps) {
   const dispatch = useDispatch<AppDispatch>();
   const filmList = useAppSelector((state) => state.filmsList);
   const isLoading = useAppSelector((state) => state.isFilmListLoading);
+  const isAuth = useAppSelector((state) => state.authorizationStatus);
   const [activeFilm, setActiveFilm] = useState('1');
 
   useEffect(() => {
-    dispatch(getListOfFilms());
-  }, [dispatch]);
+    if(isAuth !== AuthorizationStatuses.undefined) {
+      dispatch(getListOfFilms());
+    }
+  }, [dispatch, isAuth]);
 
   function handleActiveFilm(filmId: string){
     setActiveFilm(filmId);
     window.scrollTo(0, 0);
   }
 
-  if(isLoading){
+  if(isLoading === LoadStatuses.started) {
     return (
       <LoadingScreen/>
     );
   }else{
     return (
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <Routes>
           <Route path="/">
             <Route index element={
@@ -59,7 +63,7 @@ function App(props: FilmDataProps) {
             />
             <Route path="/login" element={<SignIn/>}></Route>
             <Route path="/mylist" element={
-              <AuthChecker isAuth={props.isAuth}>
+              <AuthChecker isAuth={isAuth}>
                 <MyList
                   myListFilms={props.myListFilms}
                 />
@@ -77,7 +81,7 @@ function App(props: FilmDataProps) {
             <Route path="*" element={<PageNotFound/>}></Route>
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     );
   }
 }

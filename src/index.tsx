@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app';
-import { IsAuth } from './data';
 import { FilmsData } from './mocks/films';
 import { MyListFilms } from './mocks/myListFilms';
 import { Provider } from 'react-redux';
@@ -17,7 +16,6 @@ root.render(
       <App
         filmsData={FilmsData}
         myListFilms={MyListFilms}
-        isAuth={IsAuth}
       />
     </Provider>
   </React.StrictMode>

@@ -1,20 +1,33 @@
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import Header from '../components/header';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { loginAction } from '../store/api-actions/post-action';
+
 function SignIn() {
+  const dispatch = useAppDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const errorMessage = useAppSelector((state) => state.errorMessage);
+
+  function emailHandle(evt: ChangeEvent<HTMLInputElement>) {
+    setEmail(evt.target.value);
+  }
+
+  function passwordHandle(evt: ChangeEvent<HTMLInputElement>) {
+    setPassword(evt.target.value);
+  }
+
+  function formSubmit(evt: SyntheticEvent){
+    evt.preventDefault();
+    dispatch(loginAction({email: email, password: password}));
+  }
+
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
-        <div className="logo">
-          <a href="main.html" className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
-
-        <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
-
+      <Header/>
       <div className="sign-in user-page__content">
-        <form action="#" className="sign-in__form">
+        <form onSubmit={formSubmit} action="#" className="sign-in__form">
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
@@ -23,6 +36,7 @@ function SignIn() {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
+                onChange={emailHandle}
               />
               <label
                 className="sign-in__label visually-hidden"
@@ -38,6 +52,7 @@ function SignIn() {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
+                onChange={passwordHandle}
               />
               <label
                 className="sign-in__label visually-hidden"
@@ -47,6 +62,7 @@ function SignIn() {
               </label>
             </div>
           </div>
+          {errorMessage}
           <div className="sign-in__submit">
             <button className="sign-in__btn" type="submit">
                 Sign in
