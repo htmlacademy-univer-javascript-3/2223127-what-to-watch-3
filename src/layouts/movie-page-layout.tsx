@@ -2,27 +2,32 @@ import { Link, Outlet, useParams } from 'react-router-dom';
 import ListOfFilmCards from '../components/list-of-film-cards';
 import { useEffect } from 'react';
 import { OpenFilmData } from '../types/open-film-data';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import Header from '../components/header';
 import { AuthorizationStatuses } from '../types/state';
+import { getFilmById, getFilmComments, getSimilarFilms } from '../store/api-actions/get-actions';
+import { SimilarFilms } from '../store/film-process/selector';
 
 type MoviePageLayoutProps = {
     activeFilm: OpenFilmData;
     myListFilmsNumber: number;
     isAuth: AuthorizationStatuses;
-    handleActiveFilm: (filmId: string) => void;
   };
 
-function MoviePageLayout({activeFilm, myListFilmsNumber, isAuth, handleActiveFilm}: MoviePageLayoutProps) {
+function MoviePageLayout({activeFilm, myListFilmsNumber, isAuth}: MoviePageLayoutProps) {
+  const dispatch = useAppDispatch();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
   const params = useParams();
   const pageId = params.id || activeFilm.id;
   if(pageId !== activeFilm.id){
-    handleActiveFilm(pageId);
+    dispatch(getFilmById(pageId));
+    dispatch(getSimilarFilms(pageId));
+    dispatch(getFilmComments(pageId));
+    window.scrollTo(0, 0);
   }
-  const similarFilms = useAppSelector((state) => state.similarFilms).slice(0,4);
+  const similarFilms = useAppSelector(SimilarFilms);
 
   const moviePageStyle = {
     backgroundColor: activeFilm.backgroundColor
@@ -120,7 +125,7 @@ function MoviePageLayout({activeFilm, myListFilmsNumber, isAuth, handleActiveFil
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__films-list">
-            <ListOfFilmCards filmList={similarFilms} handleActiveFilm={handleActiveFilm}/>
+            <ListOfFilmCards numberFilmCardsVisible={4} filmList={similarFilms}/>
           </div>
         </section>
 

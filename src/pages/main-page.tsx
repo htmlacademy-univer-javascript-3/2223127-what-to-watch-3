@@ -1,32 +1,27 @@
 import { Link } from 'react-router-dom';
-import ListOfFilmCards from '../components/list-of-film-cards';
-import ListOfGenres from '../components/list-of-genres';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import ShowMore from '../components/show-more';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Header from '../components/header';
 import { OpenFilmData } from '../types/open-film-data';
 import { checkAuthorization } from '../store/api-actions/get-actions';
+import { AuthorizationStatuses } from '../types/state';
+import CardsBlock from '../components/cards-block';
+import { getAuthorizationStatus } from '../store/user-process/selector';
 
 type FilmDataProps = {
   myListFilmsNumber: number;
   activeFilm: OpenFilmData;
-  handleActiveFilm: (filmId: string) => void;
 };
 
-function MainPage({myListFilmsNumber, activeFilm, handleActiveFilm }: FilmDataProps) {
+function MainPage({myListFilmsNumber, activeFilm }: FilmDataProps) {
   const dispatch = useAppDispatch();
-  const filmsByGenre = useAppSelector((state) => state.filmsByGenre);
-
-  const [numberFilmCardsVisible, setCountFilmCardsVisible] = useState(8);
+  const authStatus = useAppSelector(getAuthorizationStatus);
 
   useEffect(() => {
-    dispatch(checkAuthorization());
-  });
-
-  function showMoreClickHandle(){
-    setCountFilmCardsVisible(numberFilmCardsVisible + 8);
-  }
+    if(authStatus !== AuthorizationStatuses.authorized){
+      dispatch(checkAuthorization());
+    }
+  }, [dispatch, authStatus]);
 
   return (
     <>
@@ -89,11 +84,7 @@ function MainPage({myListFilmsNumber, activeFilm, handleActiveFilm }: FilmDataPr
       <div className="page-content">
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          <ListOfGenres/>
-          <div className="catalog__films-list">
-            <ListOfFilmCards filmList={filmsByGenre} handleActiveFilm={handleActiveFilm} numberFilmCardsVisible={numberFilmCardsVisible}/>
-          </div>
-          {numberFilmCardsVisible < filmsByGenre.length && <ShowMore onClickShowMore={showMoreClickHandle}/>}
+          <CardsBlock/>
         </section>
 
         <footer className="page-footer">

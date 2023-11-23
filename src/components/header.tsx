@@ -3,12 +3,13 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import { AuthorizationStatuses } from '../types/state';
 import HeaderSignIn from './header-sign-in';
 import { logout } from '../store/api-actions/delete-actions';
+import { getAuthorizationStatus } from '../store/user-process/selector';
 
 function Header() {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
-  const isAuth = useAppSelector((state) => state.authorizationStatus);
+  const isAuth = useAppSelector(getAuthorizationStatus);
   const pageClass = location.pathname === '/login' ? 'user-page__head' : 'film-card_head';
   function unLoginHandler(){
     dispatch(logout());

@@ -1,8 +1,8 @@
 import axios, {AxiosInstance, AxiosError} from 'axios';
 import {StatusCodes} from 'http-status-codes';
-import { changeAuthStatus, redirectToRoute, setErrorMessage } from '../store/action';
+import { redirectToRoute } from '../store/action';
 import { store } from '../store';
-import { AuthorizationStatuses } from '../types/state';
+import { setErrorMessage } from '../store/user-process/user-process';
 
 type DetailMessageType = {
   type: string;
@@ -36,9 +36,6 @@ export const createAPI = (): AxiosInstance => {
       return response;
     },
     (error: AxiosError<DetailMessageType>) => {
-      if (error.response?.status === StatusCodes.UNAUTHORIZED) {
-        store.dispatch(changeAuthStatus(AuthorizationStatuses.notAuthorized));
-      }
       if(error.response?.status === StatusCodes.BAD_REQUEST){
         const errorData = error.response.data.details;
         const message = errorData.map((data) => data.messages.join(', ')).join(', ');

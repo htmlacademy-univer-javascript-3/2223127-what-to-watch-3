@@ -1,50 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
 import FilmCard from './film-card';
 import { Film } from '../types/film-data';
+import { useAppDispatch } from '../hooks';
+import { getFilmById, getFilmComments, getSimilarFilms } from '../store/api-actions/get-actions';
 
 type ListOfFilmCardsProps = {
     filmList: Film[];
-    handleActiveFilm: (filmId: string) => void;
-    numberFilmCardsVisible?: number;
+    numberFilmCardsVisible: number;
   };
 
-function ListOfFilmCards({filmList, handleActiveFilm, numberFilmCardsVisible}: ListOfFilmCardsProps) {
-  const [hoverFilm, setHoverFilmId] = useState('');
-  const hoverFilmRef = useRef(hoverFilm);
-  const [isHover, setIsHover] = useState(false);
+function ListOfFilmCards({filmList, numberFilmCardsVisible}: ListOfFilmCardsProps) {
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if(hoverFilmRef.current !== '') {
-      timer = setTimeout(() =>{
-        setHoverFilmId(hoverFilmRef.current);
-      }, 1000);
-    } else{
-      setHoverFilmId(hoverFilmRef.current);
-    }
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [isHover]);
-
-  function handleHoverCardId(id: string, checker: boolean){
-    setHoverFilmId(hoverFilmRef.current);
-    if(checker){
-      hoverFilmRef.current = id;
-    } else{
-      hoverFilmRef.current = '';
-    }
-    setIsHover(!isHover);
+  function handleActiveFilm(filmId: string){
+    dispatch(getFilmById(filmId));
+    dispatch(getSimilarFilms(filmId));
+    dispatch(getFilmComments(filmId));
+    window.scrollTo(0, 0);
   }
 
   return (
     <>
       {filmList.map((film, i) => {
-        if(!numberFilmCardsVisible){
-          return <FilmCard key={film.id} filmId={film.id} hoverFilm={hoverFilm} filmName={film.name} filmPreview={film.previewImage} previewVideoLink={film.previewVideoLink} setHoverCardId={handleHoverCardId} handleActiveFilm={handleActiveFilm} />;
-        } else if(i <= numberFilmCardsVisible - 1){
-          return <FilmCard key={film.id} filmId={film.id} hoverFilm={hoverFilm} filmName={film.name} filmPreview={film.previewImage} previewVideoLink={film.previewVideoLink} setHoverCardId={handleHoverCardId} handleActiveFilm={handleActiveFilm} />;
+        if(i <= numberFilmCardsVisible - 1){
+          return <FilmCard key={film.id} filmId={film.id} filmName={film.name} filmPreview={film.previewImage} previewVideoLink={film.previewVideoLink} handleActiveFilm={handleActiveFilm} />;
         }
       })}
     </>
