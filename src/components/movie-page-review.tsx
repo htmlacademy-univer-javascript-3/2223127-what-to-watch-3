@@ -1,8 +1,9 @@
 import { useAppSelector } from '../hooks';
+import { getFilmComments } from '../store/film-process/selector';
 import Review from './review';
 
 function MoviePageReview() {
-  const reviews = useAppSelector((state) => state.filmComments);
+  const reviews = useAppSelector(getFilmComments);
   return (
     <div className="film-card__reviews film-card__row">
       <div className="film-card__reviews-col">

@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { changeGenre, changeListFilmsByGenre } from '../store/action';
+import { changeGenre, changeListFilmsByGenre } from '../store/film-process/film-process';
+import { getFilmList } from '../store/film-process/selector';
 import GenreListItem from './genre-list-item';
 
 function ListOfGenres() {
-  const filmList = useAppSelector((state) => state.filmsList);
+  const filmList = useAppSelector(getFilmList);
 
   function setUniqGenre(){
     const list: string[] = [];
@@ -18,10 +19,11 @@ function ListOfGenres() {
 
   const genreList = setUniqGenre();
 
+
   const dispatch = useAppDispatch();
 
   function handleGenreClick(genre: string){
-    dispatch(changeGenre({genre}));
+    dispatch(changeGenre(genre));
     dispatch(changeListFilmsByGenre());
   }
 

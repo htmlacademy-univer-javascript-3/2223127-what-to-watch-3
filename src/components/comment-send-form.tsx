@@ -1,6 +1,7 @@
 import {ChangeEvent, SyntheticEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { addComment } from '../store/api-actions/post-action';
+import { errorMessage } from '../store/user-process/selector';
 
 type CommentSendFormProps = {
   filmId: string;
@@ -11,7 +12,7 @@ function CommentSendForm({filmId}: CommentSendFormProps) {
   const stars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [rating, setRatingForm] = useState(0);
   const [commentForm, setCommentForm] = useState('');
-  const errorMessage = useAppSelector((state) => state.errorMessage);
+  const errorMessageData = useAppSelector(errorMessage);
 
   function handleRating(evt: React.MouseEvent<HTMLInputElement>){
     setRatingForm(Number(evt.currentTarget.value));
@@ -62,7 +63,7 @@ function CommentSendForm({filmId}: CommentSendFormProps) {
             defaultValue={commentForm}
           >
           </textarea>
-          {errorMessage}
+          {errorMessageData}
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">
                     Post

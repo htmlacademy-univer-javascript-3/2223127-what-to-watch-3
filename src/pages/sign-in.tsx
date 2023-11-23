@@ -2,13 +2,14 @@ import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import Header from '../components/header';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { loginAction } from '../store/api-actions/post-action';
+import { errorMessage } from '../store/user-process/selector';
 
 function SignIn() {
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const errorMessage = useAppSelector((state) => state.errorMessage);
+  const errorMessageData = useAppSelector(errorMessage);
 
   function emailHandle(evt: ChangeEvent<HTMLInputElement>) {
     setEmail(evt.target.value);
@@ -62,7 +63,7 @@ function SignIn() {
               </label>
             </div>
           </div>
-          {errorMessage}
+          {errorMessageData}
           <div className="sign-in__submit">
             <button className="sign-in__btn" type="submit">
                 Sign in

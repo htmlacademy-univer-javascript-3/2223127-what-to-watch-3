@@ -11,36 +11,30 @@ import MoviePageLayout from '../layouts/movie-page-layout';
 import MoviePageOverview from './movie-page-overview';
 import MoviePageDetails from './movie-page-details';
 import MoviePageReview from './movie-page-review';
-import { useAppSelector } from '../hooks';
-import { useDispatch } from 'react-redux';
-import { AppDispatch, AuthorizationStatuses, LoadStatuses } from '../types/state';
-import { getFilmById, getFilmComments, getListOfFilms, getSimilarFilms } from '../store/api-actions/get-actions';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import { AuthorizationStatuses, LoadStatuses } from '../types/state';
+import { getListOfFilms } from '../store/api-actions/get-actions';
 import LoadingScreen from './loading-screen';
 import HistoryRouter from '../history-route';
 import browserHistory from './browser-history';
+import { getIsLoading, getOpenFilmData } from '../store/film-process/selector';
+import { getAuthorizationStatus } from '../store/user-process/selector';
 
 type FilmDataProps = {
   myListFilms: readonly { [key: string]: string}[];
 };
 
 function App(props: FilmDataProps) {
-  const dispatch = useDispatch<AppDispatch>();
-  const isLoading = useAppSelector((state) => state.isFilmListLoading);
-  const isAuth = useAppSelector((state) => state.authorizationStatus);
-  const activeFilm = useAppSelector((state) => state.openFilmData);
+  const dispatch = useAppDispatch();
+  const isLoading = useAppSelector(getIsLoading);
+  const isAuth = useAppSelector(getAuthorizationStatus);
+  const activeFilm = useAppSelector(getOpenFilmData);
 
   useEffect(() => {
     if(isAuth !== AuthorizationStatuses.undefined) {
       dispatch(getListOfFilms());
     }
   }, [dispatch, isAuth]);
-
-  function handleActiveFilm(id: string){
-    dispatch(getFilmById(id));
-    dispatch(getSimilarFilms(id));
-    dispatch(getFilmComments(id));
-    window.scrollTo(0, 0);
-  }
 
   if(isLoading === LoadStatuses.started) {
     return (
@@ -55,7 +49,6 @@ function App(props: FilmDataProps) {
               <MainPage
                 myListFilmsNumber={props.myListFilms.length}
                 activeFilm={activeFilm}
-                handleActiveFilm={handleActiveFilm}
               />
             }
             />
@@ -69,7 +62,7 @@ function App(props: FilmDataProps) {
             }
             >
             </Route>
-            <Route path="/films/:id" element={<MoviePageLayout isAuth={isAuth} activeFilm={activeFilm} myListFilmsNumber={props.myListFilms.length} handleActiveFilm={handleActiveFilm}/>}>
+            <Route path="/films/:id" element={<MoviePageLayout isAuth={isAuth} activeFilm={activeFilm} myListFilmsNumber={props.myListFilms.length}/>}>
               <Route index element={<MoviePageOverview activeFilm={activeFilm}/>}/>
               <Route path="details" element={<MoviePageDetails activeFilm={activeFilm}/>}></Route>
               <Route path="reviews" element={<MoviePageReview/>}></Route>
