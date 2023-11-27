@@ -9,11 +9,12 @@ import CardsBlock from '../components/cards-block';
 import { getAuthorizationStatus } from '../store/user-process/selector';
 
 type FilmDataProps = {
-  myListFilmsNumber: number;
   activeFilm: OpenFilmData;
+  numberFavoriteFilms: number;
+  changeFavorite: () => void;
 };
 
-function MainPage({myListFilmsNumber, activeFilm }: FilmDataProps) {
+function MainPage({activeFilm, numberFavoriteFilms, changeFavorite }: FilmDataProps) {
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(getAuthorizationStatus);
 
@@ -68,12 +69,13 @@ function MainPage({myListFilmsNumber, activeFilm }: FilmDataProps) {
                   className="btn btn--list film-card__button"
                   type="button"
                   to="/mylist"
+                  onClick={changeFavorite}
                 >
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
+                    <use xlinkHref={activeFilm.isFavorite ? '#in-list' : '#add'}></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{myListFilmsNumber}</span>
+                  <span className="film-card__count">{numberFavoriteFilms}</span>
                 </Link>
               </div>
             </div>

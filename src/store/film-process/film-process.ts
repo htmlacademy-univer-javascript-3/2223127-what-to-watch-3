@@ -1,7 +1,7 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 import { FilmProcess, LoadStatuses, NameSpace } from '../../types/state';
-import { getFilmById, getFilmComments, getListOfFilms, getSimilarFilms } from '../api-actions/get-actions';
+import { getFavoriteFilms, getFilmById, getFilmComments, getListOfFilms, getSimilarFilms } from '../api-actions/get-actions';
 import { InitialOpenFilmData } from '../../types/open-film-data';
 import { Film } from '../../types/film-data';
 import { addComment } from '../api-actions/post-action';
@@ -14,6 +14,7 @@ const initialState: FilmProcess = {
   similarFilms: [],
   filmComments: [],
   genre: 'All genres',
+  myList: [],
 };
 
 export const filmProcess = createSlice({
@@ -36,10 +37,10 @@ export const filmProcess = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getFilmById.pending || getListOfFilms.pending || getSimilarFilms.pending || getFilmComments.pending, (state) => {
+      .addCase(getFilmById.pending || getListOfFilms.pending || getSimilarFilms.pending || getFilmComments.pending || getFavoriteFilms.pending, (state) => {
         state.isFilmListLoading = LoadStatuses.started;
       })
-      .addCase(getFilmById.rejected || getListOfFilms.rejected || getSimilarFilms.rejected || getFilmComments.rejected, (state) => {
+      .addCase(getFilmById.rejected || getListOfFilms.rejected || getSimilarFilms.rejected || getFilmComments.rejected || getFavoriteFilms.rejected, (state) => {
         state.isFilmListLoading = LoadStatuses.undefined;
       })
       .addCase(getFilmById.fulfilled, (state, action) => {
@@ -61,6 +62,10 @@ export const filmProcess = createSlice({
       })
       .addCase(addComment.fulfilled, (state, action) => {
         state.filmComments.push(action.payload);
+      })
+      .addCase(getFavoriteFilms.fulfilled, (state, action) => {
+        state.myList = action.payload;
+        state.isFilmListLoading = LoadStatuses.ended;
       });
   }
 });

@@ -4,6 +4,7 @@ import { AxiosInstance } from 'axios';
 import { UserData } from '../../types/user-data';
 import { redirectToRoute } from '../action';
 import { FilmComment } from '../../types/open-film-data';
+import { Film } from '../../types/film-data';
 
 export const loginAction = createAsyncThunk<UserData, {email: string; password: string}, {
     dispatch: AppDispatch;
@@ -29,5 +30,19 @@ export const addComment = createAsyncThunk<FilmComment, {filmId: string; comment
       const {data: commentData} = await api.post<FilmComment>(`/comments/${data.filmId}`, {comment: data.comment, rating: data.rating});
       dispatch(redirectToRoute(`/films/${data.filmId}/reviews`));
       return commentData;
+    },
+  );
+
+export const changeFavoriteStatus = createAsyncThunk<void, {filmId: string; status: number}, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }>(
+    'film/addComment',
+    async (data, {dispatch, extra: api}) => {
+      await api.post<Film>(`/favorite/${data.filmId}/${data.status}`);
+      if(data.status === 1){
+        dispatch(redirectToRoute('/mylist'));
+      }
     },
   );

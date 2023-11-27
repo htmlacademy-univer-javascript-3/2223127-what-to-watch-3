@@ -13,28 +13,35 @@ import MoviePageDetails from './movie-page-details';
 import MoviePageReview from './movie-page-review';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { AuthorizationStatuses, LoadStatuses } from '../types/state';
-import { getListOfFilms } from '../store/api-actions/get-actions';
+import { getFavoriteFilms, getListOfFilms } from '../store/api-actions/get-actions';
 import LoadingScreen from './loading-screen';
 import HistoryRouter from '../history-route';
 import browserHistory from './browser-history';
-import { getIsLoading, getOpenFilmData } from '../store/film-process/selector';
+import { FavoriteFilms, getIsLoading, getOpenFilmData } from '../store/film-process/selector';
 import { getAuthorizationStatus } from '../store/user-process/selector';
+import { changeFavoriteStatus } from '../store/api-actions/post-action';
 
-type FilmDataProps = {
-  myListFilms: readonly { [key: string]: string}[];
-};
-
-function App(props: FilmDataProps) {
+function App() {
   const dispatch = useAppDispatch();
   const isLoading = useAppSelector(getIsLoading);
   const isAuth = useAppSelector(getAuthorizationStatus);
   const activeFilm = useAppSelector(getOpenFilmData);
+  const favoriteFilms = useAppSelector(FavoriteFilms);
 
   useEffect(() => {
     if(isAuth !== AuthorizationStatuses.undefined) {
       dispatch(getListOfFilms());
+      dispatch(getFavoriteFilms());
     }
   }, [dispatch, isAuth]);
+
+  function addFavoriteHandler(){
+    if(activeFilm.isFavorite){
+      dispatch(changeFavoriteStatus({filmId: activeFilm.id, status: 0}));
+    } else{
+      dispatch(changeFavoriteStatus({filmId: activeFilm.id, status: 1}));
+    }
+  }
 
   if(isLoading === LoadStatuses.started) {
     return (
@@ -47,22 +54,21 @@ function App(props: FilmDataProps) {
           <Route path="/">
             <Route index element={
               <MainPage
-                myListFilmsNumber={props.myListFilms.length}
                 activeFilm={activeFilm}
+                numberFavoriteFilms={favoriteFilms.length}
+                changeFavorite={addFavoriteHandler}
               />
             }
             />
             <Route path="/login" element={<SignIn/>}></Route>
             <Route path="/mylist" element={
               <AuthChecker isAuth={isAuth}>
-                <MyList
-                  myListFilms={props.myListFilms}
-                />
+                <MyList/>
               </AuthChecker>
             }
             >
             </Route>
-            <Route path="/films/:id" element={<MoviePageLayout isAuth={isAuth} activeFilm={activeFilm} myListFilmsNumber={props.myListFilms.length}/>}>
+            <Route path="/films/:id" element={<MoviePageLayout changeFavorite={addFavoriteHandler} isAuth={isAuth} activeFilm={activeFilm} numberFavoriteFilms={favoriteFilms.length}/>}>
               <Route index element={<MoviePageOverview activeFilm={activeFilm}/>}/>
               <Route path="details" element={<MoviePageDetails activeFilm={activeFilm}/>}></Route>
               <Route path="reviews" element={<MoviePageReview/>}></Route>

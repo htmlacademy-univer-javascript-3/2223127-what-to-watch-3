@@ -1,8 +1,19 @@
-type MyListProps = {
-  myListFilms: readonly { [key: string]: string}[];
-};
+import { Link } from 'react-router-dom';
+import { logout } from '../store/api-actions/delete-actions';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import ListOfFilmCards from '../components/list-of-film-cards';
+import { useEffect } from 'react';
+import { getFavoriteFilms } from '../store/api-actions/get-actions';
+import { FavoriteFilms } from '../store/film-process/selector';
 
-function MyList({myListFilms}: MyListProps) {
+function MyList() {
+  const dispatch = useAppDispatch();
+  const favoriteFilms = useAppSelector(FavoriteFilms);
+
+  useEffect(() => {
+    dispatch(getFavoriteFilms());
+  }, [dispatch]);
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -15,7 +26,7 @@ function MyList({myListFilms}: MyListProps) {
         </div>
 
         <h1 className="page-title user-page__title">
-            My list <span className="user-page__film-count">{myListFilms.length}</span>
+            My list <span className="user-page__film-count">{favoriteFilms.length}</span>
         </h1>
         <ul className="user-block">
           <li className="user-block__item">
@@ -29,7 +40,11 @@ function MyList({myListFilms}: MyListProps) {
             </div>
           </li>
           <li className="user-block__item">
-            <a className="user-block__link">Sign out</a>
+            <Link to={'/login'} onClick={() => {
+              dispatch(logout());
+            }} className="user-block__link"
+            >Sign out
+            </Link>
           </li>
         </ul>
       </header>
@@ -38,7 +53,7 @@ function MyList({myListFilms}: MyListProps) {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <p>Вкладка любимых фильмов</p>
+          <ListOfFilmCards filmList={favoriteFilms} numberFilmCardsVisible={100}/>
         </div>
       </section>
 

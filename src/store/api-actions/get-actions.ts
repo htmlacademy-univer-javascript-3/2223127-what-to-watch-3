@@ -67,3 +67,15 @@ export const getFilmComments = createAsyncThunk<FilmComment[], string, {
     },
   );
 
+export const getFavoriteFilms = createAsyncThunk<Film[], undefined, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }>(
+    'films/getFavoriteFilms',
+    async (_arg, {extra: api}) => {
+      const {data: favoriteFilms} = await api.get<Film[]>('/favorite');
+      return favoriteFilms;
+    },
+  );
+
