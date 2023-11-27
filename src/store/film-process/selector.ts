@@ -10,3 +10,4 @@ export const getGenre = (state: Pick<State, NameSpace.film>): string => state[Na
 export const getIsLoading = (state: Pick<State, NameSpace.film>): LoadStatuses => state[NameSpace.film].isFilmListLoading;
 export const getOpenFilmData = (state: Pick<State, NameSpace.film>): OpenFilmData => state[NameSpace.film].openFilmData;
 export const SimilarFilms = (state: Pick<State, NameSpace.film>): Film[] => state[NameSpace.film].similarFilms;
+export const FavoriteFilms = (state: Pick<State, NameSpace.film>): Film[] => state[NameSpace.film].myList;

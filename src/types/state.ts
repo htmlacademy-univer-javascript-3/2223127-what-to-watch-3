@@ -39,4 +39,5 @@ export type FilmProcess = {
     similarFilms: Film[];
     filmComments: FilmComment[];
     genre: string;
+    myList: Film[];
 }

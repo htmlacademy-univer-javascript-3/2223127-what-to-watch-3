@@ -10,11 +10,12 @@ import { SimilarFilms } from '../store/film-process/selector';
 
 type MoviePageLayoutProps = {
     activeFilm: OpenFilmData;
-    myListFilmsNumber: number;
     isAuth: AuthorizationStatuses;
+    numberFavoriteFilms: number;
+    changeFavorite: () => void;
   };
 
-function MoviePageLayout({activeFilm, myListFilmsNumber, isAuth}: MoviePageLayoutProps) {
+function MoviePageLayout({activeFilm, isAuth, numberFavoriteFilms, changeFavorite}: MoviePageLayoutProps) {
   const dispatch = useAppDispatch();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -67,15 +68,15 @@ function MoviePageLayout({activeFilm, myListFilmsNumber, isAuth}: MoviePageLayou
                   </svg>
                   <span>Play</span>
                 </Link>
-                <Link to="/mylist"
+                <Link onClick={changeFavorite} to="/mylist"
                   className="btn btn--list film-card__button"
                   type="button"
                 >
                   <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
+                    <use xlinkHref={activeFilm.isFavorite ? '#in-list' : '#add'}></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{myListFilmsNumber}</span>
+                  <span className="film-card__count">{numberFavoriteFilms}</span>
                 </Link>
                 {isAuth === AuthorizationStatuses.authorized && <Link to={`/films/${ activeFilm.id }/review`} className="btn film-card__button">Add review</Link>}
               </div>
