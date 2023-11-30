@@ -23,6 +23,8 @@ export enum NameSpace {
     user = 'USER',
     film = 'FILM',
     data = 'DATA',
+    openFilm = 'OPENFILM',
+    filmFavorite = 'FAVORITE',
 }
 
 export type UserProcess = {
@@ -36,8 +38,17 @@ export type FilmProcess = {
     openFilmData: OpenFilmData;
     filmsList: Film[];
     filmsByGenre: Film[];
+    genre: string;
+}
+
+export type OpenFilmProcess = {
+    isFilmListLoading: LoadStatuses;
+    openFilmData: OpenFilmData;
     similarFilms: Film[];
     filmComments: FilmComment[];
-    genre: string;
+}
+
+export type FilmFavoriteProcess = {
+    isFilmListLoading: LoadStatuses;
     myList: Film[];
 }

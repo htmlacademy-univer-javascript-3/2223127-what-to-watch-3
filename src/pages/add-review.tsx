@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import CommentSendForm from '../components/comment-send-form';
+import CommentSendForm from '../components/comment-send-form/comment-send-form';
 import { OpenFilmData } from '../types/open-film-data';
 import { AuthorizationStatuses } from '../types/state';
-import Header from '../components/header';
+import Header from '../components/header/header';
 import { useEffect } from 'react';
 
 type AddReviewProps = {

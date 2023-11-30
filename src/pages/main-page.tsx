@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { useEffect } from 'react';
-import Header from '../components/header';
+import Header from '../components/header/header';
 import { OpenFilmData } from '../types/open-film-data';
-import { checkAuthorization } from '../store/api-actions/get-actions';
+import { checkAuthorization } from '../store/api-actions/get-actions/get-actions';
 import { AuthorizationStatuses } from '../types/state';
-import CardsBlock from '../components/cards-block';
+import CardsBlock from '../components/cards-block/cards-block';
 import { getAuthorizationStatus } from '../store/user-process/selector';
 
 type FilmDataProps = {
