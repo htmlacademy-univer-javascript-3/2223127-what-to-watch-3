@@ -1,20 +1,15 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 import { FilmProcess, LoadStatuses, NameSpace } from '../../types/state';
-import { getFavoriteFilms, getFilmById, getFilmComments, getListOfFilms, getSimilarFilms } from '../api-actions/get-actions';
+import { getListOfFilms } from '../api-actions/get-actions/get-actions';
 import { InitialOpenFilmData } from '../../types/open-film-data';
-import { Film } from '../../types/film-data';
-import { addComment } from '../api-actions/post-action';
 
-const initialState: FilmProcess = {
+export const initialState: FilmProcess = {
   isFilmListLoading: LoadStatuses.undefined,
   openFilmData: InitialOpenFilmData,
   filmsList: [],
   filmsByGenre: [],
-  similarFilms: [],
-  filmComments: [],
   genre: 'All genres',
-  myList: [],
 };
 
 export const filmProcess = createSlice({
@@ -31,43 +26,21 @@ export const filmProcess = createSlice({
         state.filmsByGenre = state.filmsList.filter((film) => film.genre === state.genre);
       }
     },
-    setListFilms: (state, action: PayloadAction<Film[]>) => {
-      state.filmsByGenre = action.payload;
-    },
   },
   extraReducers(builder) {
     builder
-      .addCase(getFilmById.pending || getListOfFilms.pending || getSimilarFilms.pending || getFilmComments.pending || getFavoriteFilms.pending, (state) => {
+      .addCase(getListOfFilms.pending, (state) => {
         state.isFilmListLoading = LoadStatuses.started;
       })
-      .addCase(getFilmById.rejected || getListOfFilms.rejected || getSimilarFilms.rejected || getFilmComments.rejected || getFavoriteFilms.rejected, (state) => {
+      .addCase(getListOfFilms.rejected, (state) => {
         state.isFilmListLoading = LoadStatuses.undefined;
-      })
-      .addCase(getFilmById.fulfilled, (state, action) => {
-        state.openFilmData = action.payload;
-        state.isFilmListLoading = LoadStatuses.ended;
       })
       .addCase(getListOfFilms.fulfilled, (state, action) => {
         state.filmsList = action.payload;
         state.filmsByGenre = action.payload;
         state.isFilmListLoading = LoadStatuses.ended;
-      })
-      .addCase(getSimilarFilms.fulfilled, (state, action) => {
-        state.similarFilms = action.payload;
-        state.isFilmListLoading = LoadStatuses.ended;
-      })
-      .addCase(getFilmComments.fulfilled, (state, action) => {
-        state.filmComments = action.payload;
-        state.isFilmListLoading = LoadStatuses.ended;
-      })
-      .addCase(addComment.fulfilled, (state, action) => {
-        state.filmComments.push(action.payload);
-      })
-      .addCase(getFavoriteFilms.fulfilled, (state, action) => {
-        state.myList = action.payload;
-        state.isFilmListLoading = LoadStatuses.ended;
       });
   }
 });
 
-export const {changeGenre, changeListFilmsByGenre, setListFilms} = filmProcess.actions;
+export const {changeGenre, changeListFilmsByGenre} = filmProcess.actions;

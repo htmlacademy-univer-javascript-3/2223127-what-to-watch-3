@@ -8,7 +8,7 @@ type AuthCheckerProps ={
 
 function AuthChecker({ children, isAuth}: AuthCheckerProps) {
   return (
-    isAuth === AuthorizationStatuses.authorized ? children : <Navigate to={'/login'}/>
+    isAuth !== AuthorizationStatuses.notAuthorized ? children : <Navigate to={'/login'}/>
   );
 }
 
