@@ -1,11 +1,11 @@
-import MainPage from '../../pages/main-page';
+import MainPage from '../../pages/main-page/main-page';
 import {Route, Routes } from 'react-router-dom';
 import SignIn from '../../pages/sign-in/sign-in';
-import MyList from '../../pages/my-list';
-import AddReview from '../../pages/add-review';
-import Player from '../../pages/player';
+import MyList from '../../pages/my-list/my-list';
+import AddReview from '../../pages/add-review/add-review';
+import Player from '../../pages/player/player';
 import PageNotFound from '../../pages/page-not-found/page-not-found';
-import AuthChecker from '../auth-checker';
+import AuthChecker from '../auth-checker/auth-checker';
 import { useEffect } from 'react';
 import MoviePageLayout from '../../layouts/movie-page-layout';
 import MoviePageOverview from '../movie-page-overview/movie-page-overview';

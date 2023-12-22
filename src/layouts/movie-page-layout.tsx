@@ -81,6 +81,7 @@ function MoviePageLayout({activeFilm, isAuth, numberFavoriteFilms, changeFavorit
                   </Link>
                   <Link onClick={changeFavorite} to="/mylist"
                     className="btn btn--list film-card__button"
+                    data-testid='change-favorite'
                     type="button"
                   >
                     <svg viewBox="0 0 19 20" width="19" height="20">
