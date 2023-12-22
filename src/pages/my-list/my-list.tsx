@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { logout } from '../store/api-actions/delete-actions/delete-actions';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import ListOfFilmCards from '../components/list-of-film-card/list-of-film-cards';
+import { logout } from '../../store/api-actions/delete-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import ListOfFilmCards from '../../components/list-of-film-card/list-of-film-cards';
 import { useEffect } from 'react';
-import { getFavoriteFilms } from '../store/api-actions/get-actions/get-actions';
-import { FavoriteFilms, getIsFavoriteFilmsLoading } from '../store/favorite-film-process/selector';
-import { LoadStatuses } from '../types/state';
-import LoadingScreen from '../components/loading-screen/loading-screen';
+import { getFavoriteFilms } from '../../store/api-actions/get-actions/get-actions';
+import { FavoriteFilms, getIsFavoriteFilmsLoading } from '../../store/favorite-film-process/selector';
+import { LoadStatuses } from '../../types/state';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
 
 function MyList() {
   const dispatch = useAppDispatch();

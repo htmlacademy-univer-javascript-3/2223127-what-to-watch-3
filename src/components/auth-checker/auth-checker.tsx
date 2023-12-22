@@ -1,5 +1,5 @@
 import {Navigate} from 'react-router-dom';
-import { AuthorizationStatuses } from '../types/state';
+import { AuthorizationStatuses } from '../../types/state';
 
 type AuthCheckerProps ={
     children: JSX.Element;

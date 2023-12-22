@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatuses } from '../../types/state';
 import HeaderSignIn from '../header-sign-in/header-sign-in';
-import { logout } from '../../store/api-actions/delete-actions/delete-actions';
+import { logout } from '../../store/api-actions/delete-actions';
 import { getAuthorizationStatus } from '../../store/user-process/selector';
 
 function Header() {
