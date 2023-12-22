@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PlayerButton from '../components/player-button/player-button';
+import PlayerButton from '../../components/player-button/player-button';
 
 type PlayerProps = {
   videoLink: string;

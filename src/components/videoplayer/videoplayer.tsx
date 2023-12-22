@@ -16,7 +16,7 @@ function VideoPlayer({filmPreview, isActive, previewVideoLink}: VideoPlayerProps
   }
 
   return (
-    <video ref={videoRef} poster={filmPreview} height='175px' width='280px' muted src={previewVideoLink}></video>
+    <video data-testid='video' ref={videoRef} poster={filmPreview} height='175px' width='280px' muted src={previewVideoLink}></video>
   );
 }
 
