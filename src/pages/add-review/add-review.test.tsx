@@ -1,10 +1,9 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from '@testing-library/user-event';
-import { AuthorizationStatuses, UserProcess } from "../../types/state";
-import { InitialUserData } from "../../types/user-data";
-import { withHistory, withStore } from "../../utils/mock-components";
-import AddReview from "./add-review";
-import { makeFakeOpenFilmData } from "../../utils/mocks";
+import { render, screen } from '@testing-library/react';
+import { AuthorizationStatuses, UserProcess } from '../../types/state';
+import { InitialUserData } from '../../types/user-data';
+import { withHistory, withStore } from '../../utils/mock-components';
+import AddReview from './add-review';
+import { makeFakeOpenFilmData } from '../../utils/mocks';
 
 describe('Component: AddReview', () => {
   it('should render correct if authorized', () => {
