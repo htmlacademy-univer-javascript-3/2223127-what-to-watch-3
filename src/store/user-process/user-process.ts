@@ -3,7 +3,7 @@ import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import { AuthorizationStatuses, NameSpace, UserProcess } from '../../types/state';
 import { checkAuthorization } from '../api-actions/get-actions/get-actions';
 import { InitialUserData } from '../../types/user-data';
-import { logout } from '../api-actions/delete-actions/delete-actions';
+import { logout } from '../api-actions/delete-actions';
 import { loginAction } from '../api-actions/post-actions/post-action';
 
 export const initialState: UserProcess = {

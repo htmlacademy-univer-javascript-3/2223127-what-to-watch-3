@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, State } from '../../../types/state';
+import { AppDispatch, State } from '../../types/state';
 import { AxiosInstance } from 'axios';
 
 export const logout = createAsyncThunk<void, undefined, {

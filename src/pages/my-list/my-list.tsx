@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { logout } from '../../store/api-actions/delete-actions/delete-actions';
+import { logout } from '../../store/api-actions/delete-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import ListOfFilmCards from '../../components/list-of-film-card/list-of-film-cards';
 import { useEffect } from 'react';
