@@ -11,7 +11,7 @@ describe('Component: GenreListItem', () => {
     }
 
     render(
-      <GenreListItem genre={genre} onClickGenre={(id: string)=>{
+      <GenreListItem currentGenre='All genres' genre={genre} onClickGenre={(id: string)=>{
         handleClick(id);
       }}
       />);
