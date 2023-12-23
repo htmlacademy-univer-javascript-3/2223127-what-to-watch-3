@@ -65,7 +65,7 @@ function CommentSendForm({filmId}: CommentSendFormProps) {
           </textarea>
           {errorMessageData}
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">
+            <button disabled={rating === 0 || commentForm.length < 50 || commentForm.length > 400} className="add-review__btn" type="submit">
                     Post
             </button>
           </div>

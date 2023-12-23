@@ -14,7 +14,7 @@ function AddReview({activeFilm, isAuth}: AddReviewProps) {
   const navigate = useNavigate();
   useEffect(() => {
     if(isAuth !== AuthorizationStatuses.authorized) {
-      navigate('/');
+      navigate('/login');
     }
   });
 

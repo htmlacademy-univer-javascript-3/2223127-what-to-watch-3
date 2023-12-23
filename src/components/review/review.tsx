@@ -8,6 +8,8 @@ type ReviewProps = {
 function Review({ description, author, date, rating }: ReviewProps) {
   const convertedDate = date.split('T')[0].split('-');
 
+  const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
   return (
     <div className="review">
       <blockquote className="review__quote">
@@ -18,7 +20,7 @@ function Review({ description, author, date, rating }: ReviewProps) {
         <footer className="review__details">
           <cite className="review__author">{author}</cite>
           <time className="review__date" dateTime="2016-12-24">
-            {`${convertedDate[2]}.${convertedDate[1]}.${convertedDate[0]}`}
+            {`${month[Number(convertedDate[1]) - 1]} ${convertedDate[2]}, ${convertedDate[0]}`}
           </time>
         </footer>
       </blockquote>
