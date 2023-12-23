@@ -15,6 +15,6 @@ describe('Component: MoviePageDetails', () => {
 
     expect(screen.getByText(expectedTextDirector)).toBeInTheDocument();
     expect(screen.getByText(expectedTextRatings)).toBeInTheDocument();
-    expect(screen.getByText('Bad')).toBeInTheDocument();
+    expect(screen.getByText('Good')).toBeInTheDocument();
   });
 });

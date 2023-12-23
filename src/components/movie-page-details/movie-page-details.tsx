@@ -5,9 +5,8 @@ type MoviePageDetailProps = {
 };
 
 function MoviePageDetails({activeFilm}: MoviePageDetailProps) {
-
   const director = activeFilm.director;
-  const time = activeFilm.runtime;
+  const time = activeFilm.runTime;
   const genre = activeFilm.genre;
   const released = activeFilm.released;
   const hours = Math.floor(time / 60);

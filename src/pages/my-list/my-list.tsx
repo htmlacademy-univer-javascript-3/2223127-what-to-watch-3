@@ -7,11 +7,13 @@ import { getFavoriteFilms } from '../../store/api-actions/get-actions/get-action
 import { FavoriteFilms, getIsFavoriteFilmsLoading } from '../../store/favorite-film-process/selector';
 import { LoadStatuses } from '../../types/state';
 import LoadingScreen from '../../components/loading-screen/loading-screen';
+import { getUserData } from '../../store/user-process/selector';
 
 function MyList() {
   const dispatch = useAppDispatch();
   const favoriteFilms = useAppSelector(FavoriteFilms);
   const isLoading = useAppSelector(getIsFavoriteFilmsLoading);
+  const userData = useAppSelector(getUserData);
 
   useEffect(() => {
     dispatch(getFavoriteFilms());
@@ -40,7 +42,7 @@ function MyList() {
             <li className="user-block__item">
               <div className="user-block__avatar">
                 <img
-                  src="img/avatar.jpg"
+                  src={userData.avatarUrl}
                   alt="User avatar"
                   width="63"
                   height="63"

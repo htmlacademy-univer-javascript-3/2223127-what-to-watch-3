@@ -10,7 +10,7 @@ export type OpenFilmData = {
     scoresCount: number;
     director: string;
     starring: string[];
-    runtime: number;
+    runTime: number;
     genre: string;
     released: string;
     isFavorite: boolean;
@@ -28,7 +28,7 @@ export const InitialOpenFilmData: OpenFilmData = {
   scoresCount: 0,
   director: '',
   starring: [],
-  runtime: 0,
+  runTime: 0,
   genre: '',
   released: '',
   isFavorite: false,
